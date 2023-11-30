@@ -147,4 +147,38 @@ export const photoCards: PhotoCard[] = [
       ],
     ],
   },
+  {
+    rows: [
+      [
+        {
+          src: "https://drscdn.500px.org/photo/1081461870/m%3D900/v2?sig=616b2851fcf70a36e9c995ffb7d42d0bb33a8667bad612b0b20543a596d89be7",
+          title: "Colca Canyon",
+          location: "Arequipa, Peru",
+          date: "Nov, 2023",
+        },
+        {
+          src: "https://drscdn.500px.org/photo/1081461869/m%3D900/v2?sig=6f7993087195014ead0c0b5513957271ffaf4aaea36b8731b789543e4c64f970",
+          title: "Colca Canyon",
+          location: "Arequipa, Peru",
+          date: "Nov, 2023",
+          vertical: true,
+        },
+      ],
+      [
+        {
+          src: "https://drscdn.500px.org/photo/1081461868/m%3D900/v2?sig=83cae1831844633d756c46d99b1d131fd29631488e26c939ebc023446bf324ea",
+          title: "Colca Canyon",
+          location: "Arequipa, Peru",
+          date: "Nov, 2023",
+          vertical: true,
+        },
+        {
+          src: "https://drscdn.500px.org/photo/1081461871/m%3D900/v2?sig=89faaa684c357250406ad00d970526195fccadd3b7c891ce674e9a33c6496b6b",
+          title: "Colca Canyon",
+          location: "Arequipa, Peru",
+          date: "Nov, 2023",
+        },
+      ],
+    ],
+  },
 ];
