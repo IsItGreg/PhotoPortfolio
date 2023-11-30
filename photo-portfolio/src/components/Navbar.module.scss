@@ -1,6 +1,8 @@
+@import "../colors.scss";
+
 .navbar {
-  background-color: #012e40;
-  color: #d9cb04;
+  background-color: $dark;
+  color: $text;
 
   height: 100%;
 
@@ -22,11 +24,11 @@
 .navbar-link {
   font-family: "Courier New", Courier, monospace;
   font-size: 1.5rem;
-  color: #d9cb04;
+  color: $text;
   text-decoration: none;
 
   &:hover {
-    color: #a69b03;
+    color: $text-hover;
     cursor: pointer;
   }
 }

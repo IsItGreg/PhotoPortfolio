@@ -1,4 +1,6 @@
 import styles from "./App.module.scss";
+import About from "./components/About";
+import { Images } from "./components/Images";
 import { Navbar } from "./components/Navbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -7,16 +9,12 @@ const App = () => {
     <div className={styles.root}>
       <BrowserRouter>
         <Navbar />
-        <Routes>
-          <Route
-            path="/"
-            element={<div className={styles.right}>images</div>}
-          />
-          <Route
-            path="/about"
-            element={<div className={styles.right}>about</div>}
-          />
-        </Routes>
+        <div className={styles.right}>
+          <Routes>
+            <Route path="/" element={<Images />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </div>
   );
