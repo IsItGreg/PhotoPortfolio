@@ -120,4 +120,31 @@ export const photoCards: PhotoCard[] = [
       ],
     ],
   },
+  {
+    rows: [
+      [
+        {
+          src: "https://drscdn.500px.org/photo/1081460855/m%3D900/v2?sig=471b88e942d6585a95204145d258bfb4eba96762cda65aaec1365e124129aa70",
+          title: "Pisco Fishermen",
+          location: "Pisco, Peru",
+          date: "Nov, 2023",
+          vertical: true,
+        },
+        {
+          src: "https://drscdn.500px.org/photo/1081340883/m%3D900/v2?sig=cc61a5b179eb503d38ae0c348d86f2fa2993141e47bba2895088ec08161db33d",
+          title: "Pisco Fishermen",
+          location: "Pisco, Peru",
+          date: "Nov, 2023",
+        },
+      ],
+      [
+        {
+          src: "https://drscdn.500px.org/photo/1081340884/m%3D900/v2?sig=8f7f7233787d1dcca4736f93ba081e03088508275a6f77e087c471d58ad284cf",
+          title: "Pisco Fishermen",
+          location: "Pisco, Peru",
+          date: "Nov, 2023",
+        },
+      ],
+    ],
+  },
 ];

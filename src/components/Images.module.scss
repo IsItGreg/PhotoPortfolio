@@ -27,7 +27,7 @@
 }
 
 .image-pane-square {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 0.85 / 1;
   height: 100%;
   max-width: 100%;
 
@@ -57,15 +57,16 @@
 
 .image-container {
   box-sizing: border-box;
-  flex: 9 0 0;
+  flex: 15 0 0;
 }
 
 .vertical {
-  flex: 4 0 0;
+  flex: 7 0 0;
 }
 
 .image {
   box-sizing: border-box;
+  object-fit: cover;
   width: 100%;
   height: 100%;
 }
