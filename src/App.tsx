@@ -2,12 +2,12 @@ import styles from "./App.module.scss";
 import About from "./components/About";
 import { Images } from "./components/Images";
 import { Navbar } from "./components/Navbar";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 
 const App = () => {
   return (
     <div className={styles.root}>
-      <BrowserRouter>
+      <HashRouter>
         <Navbar />
         <div className={styles.right}>
           <Routes>
@@ -15,7 +15,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
           </Routes>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 };
