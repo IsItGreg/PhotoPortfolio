@@ -1,11 +1,8 @@
-import React from "react";
-import styles from "./About.module.scss";
-
 const About = () => {
   return (
-    <div className={styles["about"]}>
-      <div className={styles["panel"]}>
-        <div>Hi!</div>
+    <div className="flex h-full flex-col items-center justify-center font-mono text-xl text-stone-50">
+      <div className="bg-mine-dark w-3/4 rounded p-5 shadow-lg md:w-96">
+        <div>Hi! 👋</div>
         <div>
           I've been taking photos for a few years and I finally decided I needed
           to show them somehow. Here's a few that I thought came out pretty

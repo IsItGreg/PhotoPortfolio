@@ -1,24 +1,22 @@
 import { photoCards, PhotoCard } from "../photos";
-import styles from "./Images.module.scss";
-import classNames from "classnames";
 
 const PhotoCardPanel = ({ photoCard }: { photoCard: PhotoCard }) => {
   return (
-    <section className={styles["image-pane"]}>
-      <div className={styles["image-pane-square"]}>
+    <section className="flex h-full snap-center flex-col items-center justify-center px-5 py-5 sm:px-24 sm:py-10">
+      <div className="aspect-17/20 flex h-full max-w-full flex-col content-stretch justify-center gap-3">
         {photoCard.rows.map((row, index) => {
           return (
-            <div className={styles["image-row"]}>
-              <div className={styles["image-row-inner"]}>
+            <div className="">
+              <div className="flex flex-row gap-3">
                 {row.map((photo, index) => {
                   return (
                     <div
-                      className={classNames(styles["image-container"], {
-                        [styles.vertical]: photo.vertical,
-                      })}
+                      className={
+                        photo.vertical ? "flex-img-ver" : "flex-img-hor"
+                      }
                     >
                       <img
-                        className={styles["image"]}
+                        className="h-full w-full object-cover shadow-lg"
                         src={photo.src}
                         alt={photo.title}
                       />
@@ -36,7 +34,7 @@ const PhotoCardPanel = ({ photoCard }: { photoCard: PhotoCard }) => {
 
 export const Images = () => {
   return (
-    <div className={styles.container}>
+    <div className="h-full snap-y snap-mandatory overflow-y-auto">
       {photoCards.map((photoCard, index) => {
         return <PhotoCardPanel key={index} photoCard={photoCard} />;
       })}
