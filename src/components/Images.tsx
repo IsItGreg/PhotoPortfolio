@@ -44,6 +44,7 @@ export const Images = () => {
   const [fullscreenedImage, setFullscreenedImage] = useState<Photo | null>(
     null,
   );
+  const [showFullscreen, setShowFullscreen] = useState(false);
 
   return (
     <div className="h-full snap-y snap-mandatory overflow-y-auto">
@@ -51,15 +52,15 @@ export const Images = () => {
         return (
           <>
             <div
-              className={`absolute left-0 top-0 z-10 flex h-screen w-screen cursor-zoom-out items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm transition duration-100 ease-in-out ${
-                fullscreenedImage ? "opacity-100" : "hidden opacity-0"
+              className={`absolute left-0 top-0 z-10 flex h-screen w-screen cursor-zoom-out items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm transition duration-500 ease-in-out ${
+                showFullscreen ? "opacity-100" : "pointer-events-none opacity-0"
               }`}
               onClick={() => {
-                setFullscreenedImage(null);
+                setShowFullscreen(false);
               }}
             >
               <img
-                className="max-h-[95%] max-w-[95%] object-cover md:max-h-[90%] md:max-w-[90%]"
+                className="max-h-[95%] max-w-[95%] object-cover transition duration-300 ease-in-out md:max-h-[90%] md:max-w-[90%]"
                 src={fullscreenedImage?.src}
               />
             </div>
@@ -68,6 +69,7 @@ export const Images = () => {
               photoCard={photoCard}
               setFullscreen={(photo: Photo | null) => {
                 setFullscreenedImage(photo);
+                setShowFullscreen(true);
               }}
             />
           </>
