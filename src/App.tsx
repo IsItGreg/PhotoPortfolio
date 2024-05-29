@@ -2,6 +2,7 @@ import About from "./components/About";
 import { Images } from "./components/Images";
 import { Navbar } from "./components/Navbar";
 import { HashRouter, Route, Routes } from "react-router-dom";
+import { photoCards2022, photoCards2024 } from "./photos";
 
 const App = () => {
   return (
@@ -10,7 +11,11 @@ const App = () => {
         <Navbar />
         <div className="bg-mine-light h-full w-full overflow-hidden">
           <Routes>
-            <Route path="/" element={<Images />} />
+            <Route path="/" element={<Images photoCards={photoCards2024} />} />
+            <Route
+              path="/2022"
+              element={<Images photoCards={photoCards2022} />}
+            />
             <Route path="/about" element={<About />} />
           </Routes>
         </div>

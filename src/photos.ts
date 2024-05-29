@@ -3,7 +3,13 @@ export type Photo = {
   title: string;
   location: string;
   date: string;
-  vertical?: boolean;
+  aspect?: "horizontal" | "vertical" | "square";
+};
+
+type PhotoRow = Photo[];
+
+export type PhotoCard = {
+  rows: PhotoRow[];
 };
 
 export const photos: Photo[] = [
@@ -27,13 +33,124 @@ export const photos: Photo[] = [
   },
 ];
 
-type PhotoRow = Photo[];
+export const photoCards2022: PhotoCard[] = [
+  {
+    rows: [
+      [
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF4507.jpg`,
+          title: "Botanical Garden 2",
+          location: "Barcelona, Spain",
+          date: "Jan, 2022",
+        },
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF4509.jpg`,
+          title: "Botanical Garden 3",
+          location: "Barcelona, Spain",
+          date: "Jan, 2022",
+        },
+      ],
+      [
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF4505.jpg`,
+          title: "Botanical Garden 1",
+          location: "Barcelona, Spain",
+          date: "Jan, 2022",
+        },
+      ],
+    ],
+  },
+  {
+    rows: [
+      [
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF3526.jpg`,
+          title: "Gondola 1",
+          location: "Barcelona, Spain",
+          date: "Jan, 2022",
+        },
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF4120.jpg`,
+          title: "Ferris Wheel 1",
+          location: "Barcelona, Spain",
+          date: "Jan, 2022",
+        },
+      ],
+      [
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF3574.jpg`,
+          title: "New World",
+          location: "Barcelona, Spain",
+          date: "Jan, 2022",
+        },
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF4257.jpg`,
+          title: "Lighthouse 1",
+          location: "Barcelona, Spain",
+          date: "Jan, 2022",
+        },
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF4064.jpg`,
+          title: "del Jardi'",
+          location: "Barcelona, Spain",
+          date: "Jan, 2022",
+        },
+      ],
+      [
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF3840.jpg`,
+          title: "Containers",
+          location: "Barcelona, Spain",
+          date: "Jan, 2022",
+        },
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF4132.jpg`,
+          title: "Gondola 2",
+          location: "Barcelona, Spain",
+          date: "Jan, 2022",
+        },
+      ],
+    ],
+  },
+  {
+    rows: [
+      [
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF4873.jpg`,
+          title: "Bird",
+          location: "Not sure",
+          date: "Not sure",
+          aspect: "horizontal",
+        },
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF4878.jpg`,
+          title: "Telephone Pole",
+          location: "Not sure",
+          date: "Not sure",
+          aspect: "vertical",
+        },
+      ],
+      [
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF5091.jpg`,
+          title: "Lighthouse 2",
+          location: "Cape Cod, MA",
+          date: "Jul, 2022",
+          aspect: "vertical",
+        },
+        {
+          src: `${process.env.PUBLIC_URL}/images/2022/DSCF4881.jpg`,
+          title: "Ferris Wheel 2",
+          location: "Montreal, Canada",
+          date: "Jun, 2022",
+          aspect: "horizontal",
+        },
+      ],
+    ],
+  },
+];
 
-export type PhotoCard = {
-  rows: PhotoRow[];
-};
-
-export const photoCards: PhotoCard[] = [
+export const photoCards2024: PhotoCard[] = [
   {
     rows: [
       [
@@ -74,7 +191,7 @@ export const photoCards: PhotoCard[] = [
           title: "Mountains",
           location: "Machupicchu, Peru",
           date: "Nov, 2023",
-          vertical: true,
+          aspect: "vertical",
         },
       ],
       [
@@ -115,7 +232,7 @@ export const photoCards: PhotoCard[] = [
           title: "Aguas Calientes in the Rain",
           location: "Machupicchu, Peru",
           date: "Nov, 2023",
-          vertical: true,
+          aspect: "vertical",
         },
       ],
     ],
@@ -128,7 +245,7 @@ export const photoCards: PhotoCard[] = [
           title: "Pisco Fishermen",
           location: "Pisco, Peru",
           date: "Nov, 2023",
-          vertical: true,
+          aspect: "vertical",
         },
         {
           src: "https://drscdn.500px.org/photo/1081340883/m%3D900/v2?sig=cc61a5b179eb503d38ae0c348d86f2fa2993141e47bba2895088ec08161db33d",
@@ -161,7 +278,7 @@ export const photoCards: PhotoCard[] = [
           title: "Colca Canyon",
           location: "Arequipa, Peru",
           date: "Nov, 2023",
-          vertical: true,
+          aspect: "vertical",
         },
       ],
       [
@@ -170,7 +287,7 @@ export const photoCards: PhotoCard[] = [
           title: "Colca Canyon",
           location: "Arequipa, Peru",
           date: "Nov, 2023",
-          vertical: true,
+          aspect: "vertical",
         },
         {
           src: "https://drscdn.500px.org/photo/1081461871/m%3D900/v2?sig=89faaa684c357250406ad00d970526195fccadd3b7c891ce674e9a33c6496b6b",

@@ -9,6 +9,9 @@ export const Navbar = () => {
       <Link className="font-mono hover:text-stone-300 md:text-2xl" to={"/"}>
         photos
       </Link>
+      <Link className="font-mono hover:text-stone-300 md:text-2xl" to={"/2022"}>
+        2022
+      </Link>
       <Link
         className="font-mono hover:text-stone-300 md:text-2xl"
         to={"/about"}
