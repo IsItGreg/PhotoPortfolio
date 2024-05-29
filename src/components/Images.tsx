@@ -13,11 +13,12 @@ const PhotoCardPanel = ({
       <div className="aspect-17/20 flex h-full max-w-full flex-col content-stretch justify-center gap-3">
         {photoCard.rows.map((row, index) => {
           return (
-            <div className="">
+            <div key={`row-${index}`} className="">
               <div className="flex flex-row gap-3">
                 {row.map((photo, index) => {
                   return (
                     <div
+                      key={`image-${index}`}
                       className={
                         photo.vertical ? "flex-img-ver" : "flex-img-hor"
                       }
@@ -48,31 +49,29 @@ export const Images = () => {
 
   return (
     <div className="h-full snap-y snap-mandatory overflow-y-auto">
+      <div
+        className={`absolute left-0 top-0 z-10 flex h-screen w-screen cursor-zoom-out items-center justify-center bg-black bg-opacity-90 backdrop-blur-sm transition duration-500 ease-in-out ${
+          showFullscreen ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+        onClick={() => {
+          setShowFullscreen(false);
+        }}
+      >
+        <img
+          className="max-h-[95%] max-w-[95%] object-cover transition duration-300 ease-in-out md:max-h-[90%] md:max-w-[90%]"
+          src={fullscreenedImage?.src}
+        />
+      </div>
       {photoCards.map((photoCard, index) => {
         return (
-          <>
-            <div
-              className={`absolute left-0 top-0 z-10 flex h-screen w-screen cursor-zoom-out items-center justify-center bg-black bg-opacity-30 backdrop-blur-sm transition duration-500 ease-in-out ${
-                showFullscreen ? "opacity-100" : "pointer-events-none opacity-0"
-              }`}
-              onClick={() => {
-                setShowFullscreen(false);
-              }}
-            >
-              <img
-                className="max-h-[95%] max-w-[95%] object-cover transition duration-300 ease-in-out md:max-h-[90%] md:max-w-[90%]"
-                src={fullscreenedImage?.src}
-              />
-            </div>
-            <PhotoCardPanel
-              key={index}
-              photoCard={photoCard}
-              setFullscreen={(photo: Photo | null) => {
-                setFullscreenedImage(photo);
-                setShowFullscreen(true);
-              }}
-            />
-          </>
+          <PhotoCardPanel
+            key={`card-${index}`}
+            photoCard={photoCard}
+            setFullscreen={(photo: Photo | null) => {
+              setFullscreenedImage(photo);
+              setShowFullscreen(true);
+            }}
+          />
         );
       })}
     </div>
