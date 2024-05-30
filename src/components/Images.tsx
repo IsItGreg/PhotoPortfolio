@@ -72,6 +72,7 @@ export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
         <img
           loading="lazy"
           className="max-h-[95%] max-w-[95%] object-cover transition duration-300 ease-in-out md:max-h-[90%] md:max-w-[90%]"
+          alt={fullscreenedImage?.title}
           src={fullscreenedImage?.src}
         />
       </div>
