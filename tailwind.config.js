@@ -18,6 +18,7 @@ module.exports = {
       flex: {
         "img-hor": "15 0 0",
         "img-ver": "7 0 0",
+        "img-sqr": "10 0 0",
       },
     },
   },

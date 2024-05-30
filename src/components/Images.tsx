@@ -15,7 +15,7 @@ const PhotoCardPanel = ({
       case "vertical":
         return "flex-img-ver";
       case "square":
-        return "flex-img-sq";
+        return "flex-img-sqr";
     }
   };
 
@@ -33,6 +33,7 @@ const PhotoCardPanel = ({
                       className={aspectToClass(photo.aspect ?? "horizontal")}
                     >
                       <img
+                        loading="lazy"
                         className="h-full w-full cursor-zoom-in object-cover shadow-lg transition ease-in-out hover:scale-[1.02]"
                         src={photo.src}
                         alt={photo.title}
@@ -68,6 +69,7 @@ export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
         }}
       >
         <img
+          loading="lazy"
           className="max-h-[95%] max-w-[95%] object-cover transition duration-300 ease-in-out md:max-h-[90%] md:max-w-[90%]"
           src={fullscreenedImage?.src}
         />
