@@ -2,7 +2,12 @@ import About from "./components/About";
 import { Images } from "./components/Images";
 import { Navbar } from "./components/Navbar";
 import { HashRouter, Route, Routes } from "react-router-dom";
-import { photoCards2022, photoCards2023, photoCards2024 } from "./photos";
+import {
+  homeCards,
+  photoCards2022,
+  photoCards2023,
+  photoCards2024,
+} from "./photos";
 
 const App = () => {
   return (
@@ -11,7 +16,11 @@ const App = () => {
         <Navbar />
         <div className="bg-amber-50 h-full w-full overflow-hidden">
           <Routes>
-            <Route path="/" element={<Images photoCards={photoCards2024} />} />
+            <Route path="/" element={<Images photoCards={homeCards} />} />
+            <Route
+              path="/2024"
+              element={<Images photoCards={photoCards2024} />}
+            />
             <Route
               path="/2023"
               element={<Images photoCards={photoCards2023} />}

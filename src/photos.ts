@@ -12,54 +12,63 @@ export type PhotoCard = {
   rows: PhotoRow[];
 };
 
-export const photos: Photo[] = [
-  {
-    src: "https://drscdn.500px.org/photo/1081223759/m%3D900/v2?sig=851ff8559d6d541db1b84744d363844b0a962bf075ae54f96e236e47cc2e5c04",
-    title: "Containers",
-    location: "Barcelona, Spain",
-    date: "Jan, 2022",
-  },
-  {
-    src: "https://drscdn.500px.org/photo/1081223761/m%3D900/v2?sig=a52f98f7e317497114566207c08e3e4f766c9c7b16a12065a2ad570a54d21a50",
-    title: "Faro Verde",
-    location: "Barcelona, Spain",
-    date: "Jan, 2022",
-  },
-  {
-    src: "https://drscdn.500px.org/photo/1081223765/m%3D900/v2?sig=f67e973138aa71c1324f7eb2fc251175db63964a8b56f025668d1f0b7a6f287c",
-    title: "Boston Light",
-    location: "Little Brewster Island, USA",
-    date: "Aug, 2022",
-  },
-];
+const barcelonaBotanicalGarden: PhotoCard = {
+  rows: [
+    [
+      {
+        src: `${process.env.PUBLIC_URL}/images/2022/DSCF4507.jpg`,
+        title: "Botanical Garden 2",
+        location: "Barcelona, Spain",
+        date: "Jan, 2022",
+      },
+      {
+        src: `${process.env.PUBLIC_URL}/images/2022/DSCF4509.jpg`,
+        title: "Botanical Garden 3",
+        location: "Barcelona, Spain",
+        date: "Jan, 2022",
+      },
+    ],
+    [
+      {
+        src: `${process.env.PUBLIC_URL}/images/2022/DSCF4505.jpg`,
+        title: "Botanical Garden 1",
+        location: "Barcelona, Spain",
+        date: "Jan, 2022",
+      },
+    ],
+  ],
+};
+
+const piscoFishermen: PhotoCard = {
+  rows: [
+    [
+      {
+        src: `${process.env.PUBLIC_URL}/images/2023/DSCF7635.jpg`,
+        title: "Pisco Fishermen",
+        location: "Pisco, Peru",
+        date: "Nov, 2023",
+        aspect: "vertical",
+      },
+      {
+        src: `${process.env.PUBLIC_URL}/images/2023/DSCF7582.jpg`,
+        title: "Pisco Fishermen",
+        location: "Pisco, Peru",
+        date: "Nov, 2023",
+      },
+    ],
+    [
+      {
+        src: `${process.env.PUBLIC_URL}/images/2023/DSCF7602.jpg`,
+        title: "Pisco Fishermen",
+        location: "Pisco, Peru",
+        date: "Nov, 2023",
+      },
+    ],
+  ],
+};
 
 export const photoCards2022: PhotoCard[] = [
-  {
-    rows: [
-      [
-        {
-          src: `${process.env.PUBLIC_URL}/images/2022/DSCF4507.jpg`,
-          title: "Botanical Garden 2",
-          location: "Barcelona, Spain",
-          date: "Jan, 2022",
-        },
-        {
-          src: `${process.env.PUBLIC_URL}/images/2022/DSCF4509.jpg`,
-          title: "Botanical Garden 3",
-          location: "Barcelona, Spain",
-          date: "Jan, 2022",
-        },
-      ],
-      [
-        {
-          src: `${process.env.PUBLIC_URL}/images/2022/DSCF4505.jpg`,
-          title: "Botanical Garden 1",
-          location: "Barcelona, Spain",
-          date: "Jan, 2022",
-        },
-      ],
-    ],
-  },
+  barcelonaBotanicalGarden,
   {
     rows: [
       [
@@ -155,67 +164,6 @@ export const photoCards2023: PhotoCard[] = [
     rows: [
       [
         {
-          src: `${process.env.PUBLIC_URL}/images/2023/DSCF6006.jpg`,
-          title: "Painters",
-          location: "Zasnse Schans, Netherlands",
-          date: "Jun, 2023",
-        },
-      ],
-      [
-        {
-          src: `${process.env.PUBLIC_URL}/images/2023/DSCF6091.jpg`,
-          title: "Library",
-          location: "Amsterdam, Netherlands",
-          date: "Jun, 2023",
-          aspect: "vertical",
-        },
-        {
-          src: `${process.env.PUBLIC_URL}/images/2023/DSCF5752.jpg`,
-          title: "Speed",
-          location: "Netherlands",
-          date: "Jun, 2023",
-        },
-      ],
-    ],
-  },
-  {
-    rows: [
-      [
-        {
-          src: `${process.env.PUBLIC_URL}/images/2023/DSCF7683.jpg`,
-          title: "Desert",
-          location: "Huacachina Peru",
-          date: "Nov, 2023",
-        },
-        {
-          src: `${process.env.PUBLIC_URL}/images/2023/DSCF8198.jpg`,
-          title: "Rainforest Lake",
-          location: "Puerto Maldonado, Peru",
-          date: "Nov, 2023",
-          aspect: "vertical",
-        },
-      ],
-      [
-        {
-          src: `${process.env.PUBLIC_URL}/images/2023/DSCF7704.jpg`,
-          title: "Colca Canyon",
-          location: "Arequipa, Peru",
-          date: "Nov, 2023",
-          aspect: "vertical",
-        },
-        {
-          src: `${process.env.PUBLIC_URL}/images/2023/DSCF8140.jpg`,
-          title: "Rainforest Boat",
-          location: "Puerto Maldonado, Peru",
-          date: "Nov, 2023",
-        },
-      ],
-    ],
-  },
-  {
-    rows: [
-      [
-        {
           src: `${process.env.PUBLIC_URL}/images/2023/DSCF8837.jpg`,
           title: "Mountains",
           location: "Machupicchu, Peru",
@@ -272,33 +220,7 @@ export const photoCards2023: PhotoCard[] = [
       ],
     ],
   },
-  {
-    rows: [
-      [
-        {
-          src: `${process.env.PUBLIC_URL}/images/2023/DSCF7635.jpg`,
-          title: "Pisco Fishermen",
-          location: "Pisco, Peru",
-          date: "Nov, 2023",
-          aspect: "vertical",
-        },
-        {
-          src: `${process.env.PUBLIC_URL}/images/2023/DSCF7582.jpg`,
-          title: "Pisco Fishermen",
-          location: "Pisco, Peru",
-          date: "Nov, 2023",
-        },
-      ],
-      [
-        {
-          src: `${process.env.PUBLIC_URL}/images/2023/DSCF7602.jpg`,
-          title: "Pisco Fishermen",
-          location: "Pisco, Peru",
-          date: "Nov, 2023",
-        },
-      ],
-    ],
-  },
+  piscoFishermen,
   {
     rows: [
       [
@@ -328,6 +250,67 @@ export const photoCards2023: PhotoCard[] = [
           src: "https://drscdn.500px.org/photo/1081461871/m%3D900/v2?sig=89faaa684c357250406ad00d970526195fccadd3b7c891ce674e9a33c6496b6b",
           title: "Colca Canyon",
           location: "Arequipa, Peru",
+          date: "Nov, 2023",
+        },
+      ],
+    ],
+  },
+  {
+    rows: [
+      [
+        {
+          src: `${process.env.PUBLIC_URL}/images/2023/DSCF6006.jpg`,
+          title: "Painters",
+          location: "Zasnse Schans, Netherlands",
+          date: "Jun, 2023",
+        },
+      ],
+      [
+        {
+          src: `${process.env.PUBLIC_URL}/images/2023/DSCF6091.jpg`,
+          title: "Library",
+          location: "Amsterdam, Netherlands",
+          date: "Jun, 2023",
+          aspect: "vertical",
+        },
+        {
+          src: `${process.env.PUBLIC_URL}/images/2023/DSCF5752.jpg`,
+          title: "Speed",
+          location: "Netherlands",
+          date: "Jun, 2023",
+        },
+      ],
+    ],
+  },
+  {
+    rows: [
+      [
+        {
+          src: `${process.env.PUBLIC_URL}/images/2023/DSCF7683.jpg`,
+          title: "Desert",
+          location: "Huacachina Peru",
+          date: "Nov, 2023",
+        },
+        {
+          src: `${process.env.PUBLIC_URL}/images/2023/DSCF8198.jpg`,
+          title: "Rainforest Lake",
+          location: "Puerto Maldonado, Peru",
+          date: "Nov, 2023",
+          aspect: "vertical",
+        },
+      ],
+      [
+        {
+          src: `${process.env.PUBLIC_URL}/images/2023/DSCF7704.jpg`,
+          title: "Colca Canyon",
+          location: "Arequipa, Peru",
+          date: "Nov, 2023",
+          aspect: "vertical",
+        },
+        {
+          src: `${process.env.PUBLIC_URL}/images/2023/DSCF8140.jpg`,
+          title: "Rainforest Boat",
+          location: "Puerto Maldonado, Peru",
           date: "Nov, 2023",
         },
       ],
@@ -391,4 +374,9 @@ export const photoCards2024: PhotoCard[] = [
       ],
     ],
   },
+];
+
+export const homeCards: PhotoCard[] = [
+  barcelonaBotanicalGarden,
+  piscoFishermen,
 ];

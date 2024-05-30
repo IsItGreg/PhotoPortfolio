@@ -8,7 +8,7 @@ const PhotoCardPanel = ({
   photoCard: PhotoCard;
   setFullscreen: (photo: Photo) => void;
 }) => {
-  const aspectToClass = (aspect: "horizontal" | "vertical" | "square") => {
+  const aspectToClass = (aspect?: "horizontal" | "vertical" | "square") => {
     switch (aspect) {
       case "horizontal":
         return "flex-img-hor";
@@ -16,6 +16,8 @@ const PhotoCardPanel = ({
         return "flex-img-ver";
       case "square":
         return "flex-img-sqr";
+      default:
+        return "flex-img-hor";
     }
   };
 
@@ -30,11 +32,11 @@ const PhotoCardPanel = ({
                   return (
                     <div
                       key={`image-${index}`}
-                      className={aspectToClass(photo.aspect ?? "horizontal")}
+                      className={aspectToClass(photo.aspect)}
                     >
                       <img
                         loading="lazy"
-                        className="h-full w-full cursor-zoom-in object-cover shadow-lg transition ease-in-out hover:scale-[1.02]"
+                        className="h-full w-full cursor-zoom-in object-cover shadow-lg transition-all ease-in-out hover:scale-[1.02] hover:drop-shadow-lg"
                         src={photo.src}
                         alt={photo.title}
                         onClick={() => setFullscreen(photo)}
@@ -57,7 +59,6 @@ export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
   );
   const [showFullscreen, setShowFullscreen] = useState(false);
 
-  console.log(photoCards);
   return (
     <div className="h-full snap-y snap-mandatory overflow-y-auto">
       <div
