@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PhotoCard, Photo } from "../photos";
 
 const PhotoCardPanel = ({
@@ -54,13 +54,24 @@ const PhotoCardPanel = ({
 };
 
 export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [fullscreenedImage, setFullscreenedImage] = useState<Photo | null>(
     null,
   );
   const [showFullscreen, setShowFullscreen] = useState(false);
 
+  useEffect(() => {
+    scrollRef.current?.scrollTo({
+      top: 0,
+      left: 0,
+    });
+  }, [photoCards]);
+
   return (
-    <div className="h-full snap-y snap-mandatory overflow-y-auto">
+    <div
+      className="h-full snap-y snap-mandatory overflow-y-auto"
+      ref={scrollRef}
+    >
       <div
         className={`absolute left-0 top-0 z-10 flex h-screen w-screen cursor-zoom-out items-center justify-center bg-black bg-opacity-90 backdrop-blur-sm transition duration-500 ease-in-out ${
           showFullscreen ? "opacity-100" : "pointer-events-none opacity-0"
