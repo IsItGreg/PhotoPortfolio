@@ -20,6 +20,19 @@ module.exports = {
         "img-ver": "7 0 0",
         "img-sqr": "10 0 0",
       },
+      animation: {
+        "slow-bounce": "slow-bounce 2s infinite",
+      },
+      keyframes: {
+        "slow-bounce": {
+          "0%, 100%": {
+            transform: "translateY(0)",
+          },
+          "50%": {
+            transform: "translateY(-5px)",
+          },
+        },
+      },
     },
   },
   plugins: [],

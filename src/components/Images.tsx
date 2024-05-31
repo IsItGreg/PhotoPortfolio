@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { PhotoCard, Photo } from "../photos";
+import { ScrollNudge } from "./ScrollNudge";
 
 const PhotoCardPanel = ({
   photoCard,
@@ -87,6 +88,7 @@ export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
           src={fullscreenedImage?.src}
         />
       </div>
+      <ScrollNudge scrollRef={scrollRef} />
       {photoCards.map((photoCard, index) => {
         return (
           <PhotoCardPanel
