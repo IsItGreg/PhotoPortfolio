@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { PhotoCard, Photo } from "../photos";
 import { ScrollNudge } from "./ScrollNudge";
 
@@ -68,18 +68,80 @@ export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
     });
   }, [photoCards]);
 
+  useEffect(() => {
+    if (!fullscreenedImage || !scrollRef.current) return;
+    const scrollCardHeight = scrollRef.current?.clientHeight;
+    const photoPageIndex = photoCards.findIndex((photoCard) =>
+      photoCard.rows.find((row) => row.includes(fullscreenedImage)),
+    );
+
+    scrollRef.current?.scrollTo({
+      top: photoPageIndex * scrollCardHeight,
+      left: 0,
+    });
+  }, [fullscreenedImage, photoCards]);
+
+  const photoArray = photoCards.flatMap((photoCard) => photoCard.rows.flat());
+
+  const fullscreenPrevious = useCallback(() => {
+    const photoIndex = photoArray.findIndex(
+      (photo) => photo === fullscreenedImage,
+    );
+    if (photoIndex === 0) return;
+    setFullscreenedImage(photoArray[photoIndex - 1]);
+  }, [photoArray, fullscreenedImage]);
+
+  const fullscreenNext = useCallback(() => {
+    const photoIndex = photoArray.findIndex(
+      (photo) => photo === fullscreenedImage,
+    );
+    if (photoIndex === photoArray.length - 1) return;
+    setFullscreenedImage(photoArray[photoIndex + 1]);
+  }, [photoArray, fullscreenedImage]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowRight") {
+        fullscreenNext();
+      }
+      if (event.key === "ArrowLeft") {
+        fullscreenPrevious();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [photoArray, fullscreenedImage, fullscreenNext, fullscreenPrevious]);
+
   return (
     <div
       className="h-full snap-y snap-mandatory overflow-y-auto"
       ref={scrollRef}
     >
       <div
-        className={`absolute left-0 top-0 z-10 flex h-screen w-screen cursor-zoom-out items-center justify-center bg-black bg-opacity-90 backdrop-blur-sm transition duration-500 ease-in-out ${
-          showFullscreen ? "opacity-100" : "pointer-events-none opacity-0"
+        className={`absolute left-0 top-0 z-20 flex flex-row h-screen w-screen items-center justify-center ${
+          showFullscreen ? "" : "pointer-events-none"
         }`}
-        onClick={() => {
-          setShowFullscreen(false);
-        }}
+      >
+        <div
+          className="h-full w-1/4 cursor-w-resize"
+          onClick={() => fullscreenPrevious()}
+        ></div>
+        <div
+          className="h-full w-1/2 cursor-zoom-out"
+          onClick={() => setShowFullscreen(false)}
+        ></div>
+        <div
+          className="h-full w-1/4 cursor-e-resize"
+          onClick={() => fullscreenNext()}
+        ></div>
+      </div>
+      <div
+        className={`pointer-events-none absolute left-0 top-0 z-10 flex h-screen w-screen items-center justify-center bg-black bg-opacity-90 backdrop-blur-sm transition duration-500 ease-in-out ${
+          showFullscreen ? "opacity-100" : "opacity-0"
+        }`}
       >
         <img
           loading="lazy"
