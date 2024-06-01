@@ -27,12 +27,12 @@ const PhotoCardPanel = ({
       <div className="aspect-17/20 flex h-full max-w-full flex-col content-stretch justify-center gap-3">
         {photoCard.rows.map((row, index) => {
           return (
-            <div key={`row-${index}`} className="">
+            <div key={`row-${row.at(0)?.title}-${index}`} className="">
               <div className="flex flex-row gap-3">
                 {row.map((photo, index) => {
                   return (
                     <div
-                      key={`image-${index}`}
+                      key={`image-${photo.title}-${index}`}
                       className={aspectToClass(photo.aspect)}
                     >
                       <img

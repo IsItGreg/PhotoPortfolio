@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{html,js,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        name: ["Just Another Hand", "sans-serif"],
+      },
       colors: {
         mine: {
           dark: "#473C18",

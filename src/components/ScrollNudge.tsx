@@ -10,8 +10,16 @@ export const ScrollNudge = ({
   const [showScrollNudge, setShowScrollNudge] = useState(false);
 
   useEffect(() => {
+    const _scrollRefCurrent = scrollRef.current;
+    if (!_scrollRefCurrent) return;
+
     let scrollTimeout = setTimeout(() => {
-      setShowScrollNudge(true);
+      if (
+        _scrollRefCurrent.scrollTop + _scrollRefCurrent.clientHeight <
+        _scrollRefCurrent.scrollHeight
+      ) {
+        setShowScrollNudge(true);
+      }
     }, 5000);
 
     const handleScroll = () => {
@@ -19,12 +27,12 @@ export const ScrollNudge = ({
       clearTimeout(scrollTimeout);
     };
 
-    scrollRef.current?.addEventListener("scroll", handleScroll);
+    _scrollRefCurrent.addEventListener("scroll", handleScroll);
     return () => {
       clearTimeout(scrollTimeout);
-      scrollRef.current?.removeEventListener("scroll", handleScroll);
+      _scrollRefCurrent.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [scrollRef]);
 
   return (
     <div
