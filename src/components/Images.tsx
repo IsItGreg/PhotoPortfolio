@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { PhotoCard, Photo } from "../photos";
+import {
+  PhotoCard,
+  Photo,
+  getCompressedImageSrc,
+  getFullresImageSrc,
+} from "../photos";
 import { ScrollNudge } from "./ScrollNudge";
 
 const PhotoCardPanel = ({
@@ -38,7 +43,7 @@ const PhotoCardPanel = ({
                       <img
                         loading="lazy"
                         className="h-full w-full cursor-zoom-in object-cover shadow-lg transition-all ease-in-out hover:scale-[1.02] hover:drop-shadow-lg"
-                        src={photo.src}
+                        src={getCompressedImageSrc(photo.yearFilename)}
                         alt={photo.title}
                         onClick={() => setFullscreen(photo)}
                       />
@@ -143,12 +148,14 @@ export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
           showFullscreen ? "opacity-100" : "opacity-0"
         }`}
       >
-        <img
-          loading="lazy"
-          className="max-h-[95%] max-w-[95%] object-cover transition duration-300 ease-in-out md:max-h-[90%] md:max-w-[90%]"
-          alt={fullscreenedImage?.title}
-          src={fullscreenedImage?.src}
-        />
+        {fullscreenedImage && (
+          <img
+            loading="lazy"
+            className="max-h-[95%] max-w-[95%] object-cover transition duration-300 ease-in-out md:max-h-[90%] md:max-w-[90%]"
+            alt={fullscreenedImage?.title}
+            src={getFullresImageSrc(fullscreenedImage?.yearFilename)}
+          />
+        )}
       </div>
       <ScrollNudge scrollRef={scrollRef} />
       {photoCards.map((photoCard, index) => {
