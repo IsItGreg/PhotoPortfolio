@@ -8,8 +8,16 @@ import {
   photoCards2023,
   photoCards2024,
 } from "./photos";
+// import { useWindowDimensions } from "./utils/useWindowDimensions";
+import { AppV2 } from "./v2/AppV2";
 
 const App = () => {
+  // const { width, height } = useWindowDimensions();
+
+  // const isTall = height > width;
+
+  return <AppV2 />;
+
   return (
     <div className="flex h-screen w-screen flex-col md:flex-row">
       <HashRouter>
