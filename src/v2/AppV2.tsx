@@ -37,6 +37,73 @@ const Panel = ({
   );
 };
 
+const BoxLid = () => {
+  const scroll = useScroll();
+  const lidRef = useRef<THREE.Group>(null);
+  const tabRef = useRef<THREE.Group>(null);
+  const rightTabRef = useRef<THREE.Mesh>(null);
+  const leftTabRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state, delta) => {
+    const offset = scroll.offset;
+    const lidDelay = 0.4;
+    console.log(offset);
+    console.log(Math.max(offset - lidDelay, 0));
+    if (lidRef.current) {
+      lidRef.current.rotation.x =
+        (Math.cos(Math.max(offset - lidDelay, 0)) * -0.5 + 0.5) * -8 * Math.PI;
+    }
+    if (tabRef.current) {
+      tabRef.current.rotation.x = Math.atan(offset) * -1 * Math.PI;
+    }
+    if (rightTabRef.current) {
+      rightTabRef.current.rotation.y =
+        Math.PI / 2 +
+        (Math.cos(Math.max(offset - lidDelay, 0)) * -0.5 + 0.5) * 2 * Math.PI;
+    }
+    if (leftTabRef.current) {
+      leftTabRef.current.rotation.y =
+        Math.PI / 2 -
+        (Math.cos(Math.max(offset - lidDelay, 0)) * -0.5 + 0.5) * 2 * Math.PI;
+    }
+  });
+
+  return (
+    <group ref={lidRef} position={[0, HEIGHT, -WIDTH / 2]}>
+      <Panel
+        pos={new THREE.Vector3(0, 0, WIDTH / 2)}
+        rotation={new THREE.Euler(Math.PI / 2, 0, 0)}
+        width={WIDTH}
+        height={WIDTH}
+      />
+      <group ref={tabRef} position={[0, 0, WIDTH]}>
+        <Panel
+          pos={new THREE.Vector3(0, -HEIGHT / 2, 0)}
+          rotation={new THREE.Euler(0, 0, 0)}
+          width={WIDTH}
+          height={HEIGHT}
+        />
+        <mesh
+          ref={rightTabRef}
+          position={[WIDTH / 2, 0, 0]}
+          rotation={new THREE.Euler(Math.PI, Math.PI / 2, Math.PI / 2)}
+        >
+          <circleGeometry args={[HEIGHT, undefined, undefined, Math.PI / 2]} />
+          <meshToonMaterial color="#A07F66" side={THREE.DoubleSide} />
+        </mesh>
+        <mesh
+          ref={leftTabRef}
+          position={[-WIDTH / 2, 0, 0]}
+          rotation={new THREE.Euler(Math.PI, Math.PI / 2, Math.PI / 2)}
+        >
+          <circleGeometry args={[HEIGHT, undefined, undefined, Math.PI / 2]} />
+          <meshToonMaterial color="#A07F66" side={THREE.DoubleSide} />
+        </mesh>
+      </group>
+    </group>
+  );
+};
+
 const BoxBottom = () => {
   return (
     <group>
@@ -86,7 +153,7 @@ const Box = () => {
   useFrame((state, delta) => {
     // The offset is between 0 and 1, you can apply it to your models any way you like
     const offset = 1 - scroll.offset;
-    console.log(offset);
+    // console.log(offset);
     // const offset = scroll.offset;
     state.camera.position.set(
       Math.sin((offset / Math.PI) * 2) * 30,
@@ -102,12 +169,8 @@ const Box = () => {
   });
 
   return (
-    // <mesh>
-    //   <boxGeometry args={[8, 2.75, 8]} />
-    //   <meshToonMaterial color="#A07F66" />
-    // </mesh>
     <>
-      {/* <BoxLid /> */}
+      <BoxLid />
       <BoxBottom />
     </>
   );
@@ -117,30 +180,17 @@ export const AppV2 = () => {
   return (
     <>
       <Canvas shadows camera={{ position: [20, 10, 50], fov: 45 }}>
-        {/* <ambientLight intensity={0.03} />
-        <fog attach="fog" args={["#ff5020", 5, 18]} />
-        <spotLight
-          angle={0.14}
-          color=""
-          penumbra={1}
-          position={[25, 50, -20]}
-          shadow-mapSize={[2048, 2048]}
-          shadow-bias={-0.0001}
-          castShadow
-        />
-        <Sky sunPosition={[2, 0.4, 10]} /> */}
-        {/* <OrbitControls
-          minPolarAngle={Math.PI / 2}
-          maxPolarAngle={Math.PI / 2}
-          enableZoom={false}
-          enablePan={false}
-        /> */}
         <gridHelper args={[20, 20]} />
         <GizmoHelper>
           <GizmoViewcube />
         </GizmoHelper>
         <directionalLight position={[0, 2, 10]} intensity={0.8} />
-        <spotLight position={[0, 10, 0]} rotation={[0, 0, 0]} intensity={100} />
+        <spotLight
+          position={[0, 20, 0]}
+          rotation={[0, 0, 0]}
+          intensity={200}
+          angle={Math.PI / 4}
+        />
         <ScrollControls pages={3}>
           <Box />
         </ScrollControls>
