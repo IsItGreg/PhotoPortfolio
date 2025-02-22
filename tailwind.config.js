@@ -5,6 +5,8 @@ module.exports = {
     extend: {
       fontFamily: {
         name: ["Just Another Hand", "sans-serif"],
+        lost: ["Lost Late", "sans-serif"],
+        handwriting: ["Handwriting", "sans-serif"],
       },
       colors: {
         mine: {
@@ -25,6 +27,7 @@ module.exports = {
       },
       animation: {
         "slow-bounce": "slow-bounce 2s infinite",
+        "fade-in": "fade-in 0.5s ease-in-out",
       },
       keyframes: {
         "slow-bounce": {
@@ -33,6 +36,14 @@ module.exports = {
           },
           "50%": {
             transform: "translateY(-5px)",
+          },
+        },
+        "fade-in": {
+          "0%": {
+            opacity: "0",
+          },
+          "100%": {
+            opacity: "1",
           },
         },
       },

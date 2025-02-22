@@ -8,15 +8,18 @@ import {
   photoCards2023,
   photoCards2024,
 } from "./photos";
-// import { useWindowDimensions } from "./utils/useWindowDimensions";
-import { AppV2 } from "./v2/AppV2";
+import { ThreeDimPage } from "./ThreeDim/ThreeDimPage";
+import { ThreeDim } from "./ThreeDim/ThreeDim";
 
 const App = () => {
-  // const { width, height } = useWindowDimensions();
-
-  // const isTall = height > width;
-
-  return <AppV2 />;
+  return (
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<ThreeDimPage />} />
+        <Route path="/2024" element={<Images photoCards={photoCards2024} />} />
+      </Routes>
+    </HashRouter>
+  );
 
   return (
     <div className="flex h-screen w-screen flex-col md:flex-row">

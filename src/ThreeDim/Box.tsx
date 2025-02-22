@@ -20,33 +20,23 @@ const Panel = ({
 }) => {
   const props = useTexture({
     map: "Paper004_1K-JPG_Color.jpg",
-    // displacementMap: "Paper004_1K-JPG_Displacement.jpg",
     normalMap: "Paper004_1K-JPG_NormalDX.jpg",
     roughnessMap: "Paper004_1K-JPG_Roughness.jpg",
-    // aoMap: "Paper004_1K-JPG_AmbientOcclusion.jpg",
   });
 
-  props.map.wrapS = THREE.RepeatWrapping;
-  props.map.wrapT = THREE.RepeatWrapping;
-  props.map.repeat.set(width / height, height / height);
-
-  props.normalMap.wrapS = THREE.RepeatWrapping;
-  props.normalMap.wrapT = THREE.RepeatWrapping;
-  props.normalMap.repeat.set(width / height, height / height);
-
-  props.roughnessMap.wrapS = THREE.RepeatWrapping;
-  props.roughnessMap.wrapT = THREE.RepeatWrapping;
-  props.roughnessMap.repeat.set(width / height, height / height);
+  const textureScaleY = 1 / WIDTH;
+  const textureScaleX = 1 / HEIGHT;
+  // props.map.wrapS = THREE.RepeatWrapping;
+  // props.map.wrapT = THREE.RepeatWrapping;
+  // props.map.repeat.set(width * textureScaleX, height * textureScaleY);
 
   return (
-    <mesh position={pos} rotation={rotation}>
-      {/* <planeGeometry args={[width, height]} /> */}
+    <mesh position={pos} rotation={rotation} castShadow receiveShadow>
       <boxGeometry args={[width, height, THICKNESS]} />
       <meshStandardMaterial
-        {...props}
+        map={props.map}
         side={THREE.DoubleSide}
-        roughness={10}
-        normalScale={new THREE.Vector2(2, 2)}
+        color="#ffffff"
       />
     </mesh>
   );
@@ -85,11 +75,15 @@ const BoxLid = () => {
 
   const props = useTexture({
     map: "Paper004_1K-JPG_Color.jpg",
-    // displacementMap: "Paper004_1K-JPG_Displacement.jpg",
     normalMap: "Paper004_1K-JPG_NormalDX.jpg",
     roughnessMap: "Paper004_1K-JPG_Roughness.jpg",
-    // aoMap: "Paper004_1K-JPG_AmbientOcclusion.jpg",
   });
+
+  const textureScaleY = 1 / WIDTH;
+  const textureScaleX = 1 / HEIGHT;
+  props.map.wrapS = THREE.RepeatWrapping;
+  props.map.wrapT = THREE.RepeatWrapping;
+  props.map.repeat.set(HEIGHT * textureScaleX, WIDTH * textureScaleY);
 
   return (
     <group ref={lidRef} position={[0, HEIGHT, -WIDTH / 2 + THICKNESS]}>
@@ -125,7 +119,11 @@ const BoxLid = () => {
               Math.PI / 2,
             ]}
           />
-          <meshToonMaterial color="#A07F66" side={THREE.DoubleSide} />
+          <meshStandardMaterial
+            map={props.map}
+            color="#ffffff"
+            side={THREE.DoubleSide}
+          />
         </mesh>
         <mesh
           ref={leftTabRef}
@@ -146,7 +144,11 @@ const BoxLid = () => {
               Math.PI / 2,
             ]}
           />
-          <meshToonMaterial color="#A07F66" side={THREE.DoubleSide} />
+          <meshStandardMaterial
+            map={props.map}
+            color="#ffffff"
+            side={THREE.DoubleSide}
+          />
         </mesh>
       </group>
     </group>
@@ -229,7 +231,7 @@ export const Mat = () => {
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.6, 0]}>
         {/* <planeGeometry args={[50, 40]} /> */}
         <boxGeometry args={[50, 40, 1]} />
-        <meshStandardMaterial {...floorProps} />
+        <meshToonMaterial {...floorProps} />
       </mesh>
     </group>
   );

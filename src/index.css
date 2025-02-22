@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Lost Late";
+  src: url("./fonts/LOSTLATE.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Handwriting";
+  src: url("./fonts/handwriting.ttf") format("truetype");
+}
+
 #root,
 body,
 html {
