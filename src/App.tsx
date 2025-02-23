@@ -10,13 +10,15 @@ import {
 } from "./photos";
 import { ThreeDimPage } from "./ThreeDim/ThreeDimPage";
 import { ThreeDim } from "./ThreeDim/ThreeDim";
+import { TwoDim } from "./TwoDim/TwoDim";
 
 const App = () => {
   return (
     <HashRouter>
       <Routes>
         <Route path="/" element={<ThreeDimPage />} />
-        <Route path="/2024" element={<Images photoCards={photoCards2024} />} />
+        {/* <Route path="/2024" element={<Images photoCards={photoCards2024} />} /> */}
+        <Route path="/2d" element={<TwoDim />} />
       </Routes>
     </HashRouter>
   );

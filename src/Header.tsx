@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
-import Modal from "../components/Modal";
+import Modal from "./components/Modal";
 import { useState } from "react";
 
-export const Header = () => {
+export const Header = ({ isTwoDim = false }: { isTwoDim?: boolean }) => {
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
   return (
     <>
@@ -16,9 +16,9 @@ export const Header = () => {
         <div className="mx-auto flex flex-row gap-4 font-lost text-2xl select-none">
           <NavLink
             className="hover:text-orange-400 transition-all duration-300 ease-in-out"
-            to={"/2024"}
+            to={isTwoDim ? "/" : "/2d"}
           >
-            2D
+            {isTwoDim ? "3D" : "2D"}
           </NavLink>
           <a
             className="hover:text-orange-400 hover:cursor-pointer transition-all duration-300 ease-in-out"
