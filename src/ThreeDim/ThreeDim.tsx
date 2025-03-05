@@ -1,8 +1,15 @@
-import { Environment, ScrollControls, useScroll } from "@react-three/drei";
+import {
+  Environment,
+  Loader,
+  ScrollControls,
+  useScroll,
+  Html,
+} from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Mat, Box } from "./Box";
 import { PhotoStack } from "./PhotoCard";
 import * as THREE from "three";
+import { Suspense } from "react";
 
 const ControlCamera = () => {
   const scroll = useScroll();
@@ -28,28 +35,33 @@ const ControlCamera = () => {
 export const ThreeDim = () => {
   return (
     <Canvas shadows camera={{ position: [20, 10, 50], fov: 45 }}>
-      {/* <gridHelper args={[20, 20]} /> */}
-      {/* <GizmoHelper>
-    <GizmoViewcube />
-  </GizmoHelper> */}
-      <fog attach="fog" args={["#000", 2, 300]} />
-      <Environment preset="night" background blur={0.5} />
-      {/* <directionalLight position={[-5, 10, 20]} intensity={1} /> */}
-      <spotLight
-        position={[0, 20, 0]}
-        rotation={[0, 0, 0]}
-        intensity={400}
-        angle={Math.PI / 6}
-        castShadow
-        shadow-mapSize={[2048, 2048]}
-        shadow-bias={-0.0001}
-      />
-      <Mat />
-      <ScrollControls pages={3}>
-        <ControlCamera />
-        <Box />
-        <PhotoStack position={new THREE.Vector3(0, 0.1, 0)} />
-      </ScrollControls>
+      <Suspense
+        fallback={
+          <Html center>
+            <Loader dataInterpolation={(p) => `Loading ${p.toFixed(0)}%`} />
+          </Html>
+        }
+      >
+        <fog attach="fog" args={["#000", 2, 300]} />
+        <Environment preset="night" background blur={0.5} />
+        {/* <directionalLight position={[-5, 10, 20]} intensity={0.1} /> */}
+        <spotLight
+          position={[0, 20, 0]}
+          rotation={[0, 0, 0]}
+          intensity={700}
+          angle={Math.PI / 6}
+          castShadow
+          shadow-mapSize={[2048, 2048]}
+          shadow-bias={-0.0001}
+          penumbra={0.5}
+        />
+        <Mat />
+        <ScrollControls pages={3}>
+          <ControlCamera />
+          <Box />
+          <PhotoStack position={new THREE.Vector3(0, 0.1, 0)} />
+        </ScrollControls>
+      </Suspense>
     </Canvas>
   );
 };

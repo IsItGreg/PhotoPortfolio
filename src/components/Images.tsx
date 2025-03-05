@@ -28,7 +28,7 @@ const PhotoCardPanel = ({
   };
 
   return (
-    <section className="flex h-full snap-center flex-col items-center justify-center px-5 py-5 sm:px-24 sm:py-10">
+    <section className="flex h-full snap-center flex-col items-center justify-center px-5 py-32 sm:px-24">
       <div className="aspect-17/20 flex h-full max-w-full flex-col content-stretch justify-center gap-3">
         {photoCard.rows.map((row, index) => {
           return (

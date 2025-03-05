@@ -167,102 +167,143 @@ export const photoCards2022: PhotoCard[] = [
   },
 ];
 
+const machuPicchuMountains: PhotoCard = {
+  rows: [
+    [
+      {
+        yearFilename: `2023/DSCF8837`,
+        title: "Mountains",
+        location: "Machupicchu, Peru",
+        date: "Nov, 2023",
+      },
+      {
+        yearFilename: `2023/DSCF8814`,
+        title: "Mountains",
+        location: "Machupicchu, Peru",
+        date: "Nov, 2023",
+        aspect: "vertical",
+      },
+    ],
+    [
+      {
+        yearFilename: `2023/DSCF8817`,
+        title: "Mountains",
+        location: "Machupicchu, Peru",
+        date: "Nov, 2023",
+      },
+      {
+        yearFilename: `2023/DSCF8803`,
+        title: "Mountains",
+        location: "Machupicchu, Peru",
+        date: "Nov, 2023",
+      },
+    ],
+  ],
+};
+
+const aguasCalientesInTheRain: PhotoCard = {
+  rows: [
+    [
+      {
+        yearFilename: `2023/DSCF8739`,
+        title: "Aguas Calientes in the Rain",
+        location: "Machupicchu, Peru",
+        date: "Nov, 2023",
+      },
+    ],
+    [
+      {
+        yearFilename: `2023/DSCF8763`,
+        title: "Aguas Calientes in the Rain",
+        location: "Machupicchu, Peru",
+        date: "Nov, 2023",
+      },
+      {
+        yearFilename: `2023/DSCF8750`,
+        title: "Aguas Calientes in the Rain",
+        location: "Machupicchu, Peru",
+        date: "Nov, 2023",
+        aspect: "vertical",
+      },
+    ],
+  ],
+};
+
+const colcaCanyon: PhotoCard = {
+  rows: [
+    [
+      {
+        yearFilename: `2023/DSCF7867`,
+        title: "Colca Canyon",
+        location: "Arequipa, Peru",
+        date: "Nov, 2023",
+      },
+      {
+        yearFilename: `2023/DSCF7909`,
+        title: "Colca Canyon",
+        location: "Arequipa, Peru",
+        date: "Nov, 2023",
+        aspect: "vertical",
+      },
+    ],
+    [
+      {
+        yearFilename: `2023/DSCF7995`,
+        title: "Colca Canyon",
+        location: "Arequipa, Peru",
+        date: "Nov, 2023",
+        aspect: "vertical",
+      },
+      {
+        yearFilename: `2023/DSCF8025`,
+        title: "Colca Canyon",
+        location: "Arequipa, Peru",
+        date: "Nov, 2023",
+      },
+    ],
+  ],
+};
+
+const peruOther: PhotoCard = {
+  rows: [
+    [
+      {
+        yearFilename: `2023/DSCF7683`,
+        title: "Desert",
+        location: "Huacachina Peru",
+        date: "Nov, 2023",
+      },
+      {
+        yearFilename: `2023/DSCF8198`,
+        title: "Rainforest Lake",
+        location: "Puerto Maldonado, Peru",
+        date: "Nov, 2023",
+        aspect: "vertical",
+      },
+    ],
+    [
+      {
+        yearFilename: `2023/DSCF7704`,
+        title: "Colca Canyon",
+        location: "Arequipa, Peru",
+        date: "Nov, 2023",
+        aspect: "vertical",
+      },
+      {
+        yearFilename: `2023/DSCF8140`,
+        title: "Rainforest Boat",
+        location: "Puerto Maldonado, Peru",
+        date: "Nov, 2023",
+      },
+    ],
+  ],
+};
+
 export const photoCards2023: PhotoCard[] = [
-  {
-    rows: [
-      [
-        {
-          yearFilename: `2023/DSCF8837`,
-          title: "Mountains",
-          location: "Machupicchu, Peru",
-          date: "Nov, 2023",
-        },
-        {
-          yearFilename: `2023/DSCF8814`,
-          title: "Mountains",
-          location: "Machupicchu, Peru",
-          date: "Nov, 2023",
-          aspect: "vertical",
-        },
-      ],
-      [
-        {
-          yearFilename: `2023/DSCF8817`,
-          title: "Mountains",
-          location: "Machupicchu, Peru",
-          date: "Nov, 2023",
-        },
-        {
-          yearFilename: `2023/DSCF8803`,
-          title: "Mountains",
-          location: "Machupicchu, Peru",
-          date: "Nov, 2023",
-        },
-      ],
-    ],
-  },
-  {
-    rows: [
-      [
-        {
-          yearFilename: `2023/DSCF8739`,
-          title: "Aguas Calientes in the Rain",
-          location: "Machupicchu, Peru",
-          date: "Nov, 2023",
-        },
-      ],
-      [
-        {
-          yearFilename: `2023/DSCF8763`,
-          title: "Aguas Calientes in the Rain",
-          location: "Machupicchu, Peru",
-          date: "Nov, 2023",
-        },
-        {
-          yearFilename: `2023/DSCF8750`,
-          title: "Aguas Calientes in the Rain",
-          location: "Machupicchu, Peru",
-          date: "Nov, 2023",
-          aspect: "vertical",
-        },
-      ],
-    ],
-  },
+  machuPicchuMountains,
+  aguasCalientesInTheRain,
   piscoFishermen,
-  {
-    rows: [
-      [
-        {
-          yearFilename: `2023/DSCF7867`,
-          title: "Colca Canyon",
-          location: "Arequipa, Peru",
-          date: "Nov, 2023",
-        },
-        {
-          yearFilename: `2023/DSCF7909`,
-          title: "Colca Canyon",
-          location: "Arequipa, Peru",
-          date: "Nov, 2023",
-          aspect: "vertical",
-        },
-      ],
-      [
-        {
-          yearFilename: `2023/DSCF7995`,
-          title: "Colca Canyon",
-          location: "Arequipa, Peru",
-          date: "Nov, 2023",
-          aspect: "vertical",
-        },
-        {
-          yearFilename: `2023/DSCF8025`,
-          title: "Colca Canyon",
-          location: "Arequipa, Peru",
-          date: "Nov, 2023",
-        },
-      ],
-    ],
-  },
+  colcaCanyon,
   {
     rows: [
       [
@@ -290,40 +331,7 @@ export const photoCards2023: PhotoCard[] = [
       ],
     ],
   },
-  {
-    rows: [
-      [
-        {
-          yearFilename: `2023/DSCF7683`,
-          title: "Desert",
-          location: "Huacachina Peru",
-          date: "Nov, 2023",
-        },
-        {
-          yearFilename: `2023/DSCF8198`,
-          title: "Rainforest Lake",
-          location: "Puerto Maldonado, Peru",
-          date: "Nov, 2023",
-          aspect: "vertical",
-        },
-      ],
-      [
-        {
-          yearFilename: `2023/DSCF7704`,
-          title: "Colca Canyon",
-          location: "Arequipa, Peru",
-          date: "Nov, 2023",
-          aspect: "vertical",
-        },
-        {
-          yearFilename: `2023/DSCF8140`,
-          title: "Rainforest Boat",
-          location: "Puerto Maldonado, Peru",
-          date: "Nov, 2023",
-        },
-      ],
-    ],
-  },
+  peruOther,
 ];
 
 export const photoCards2024: PhotoCard[] = [
@@ -387,4 +395,12 @@ export const photoCards2024: PhotoCard[] = [
 export const homeCards: PhotoCard[] = [
   barcelonaBotanicalGarden,
   piscoFishermen,
+];
+
+export const favoriteCards: PhotoCard[] = [
+  barcelonaBotanicalGarden,
+  machuPicchuMountains,
+  piscoFishermen,
+  colcaCanyon,
+  peruOther,
 ];
