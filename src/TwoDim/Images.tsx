@@ -65,6 +65,10 @@ export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
   const [fullscreenedImage, setFullscreenedImage] = useState<Photo | null>(
     null,
   );
+  const photoArray = photoCards.flatMap((photoCard) => photoCard.rows.flat());
+  const fullscreenImageIndex = photoArray.findIndex(
+    (photo) => photo === fullscreenedImage,
+  );
   const [showFullscreen, setShowFullscreen] = useState(false);
 
   useEffect(() => {
@@ -87,22 +91,14 @@ export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
     });
   }, [fullscreenedImage, photoCards]);
 
-  const photoArray = photoCards.flatMap((photoCard) => photoCard.rows.flat());
-
   const fullscreenPrevious = useCallback(() => {
-    const photoIndex = photoArray.findIndex(
-      (photo) => photo === fullscreenedImage,
-    );
-    if (photoIndex === 0) return;
-    setFullscreenedImage(photoArray[photoIndex - 1]);
+    if (fullscreenImageIndex === 0) return;
+    setFullscreenedImage(photoArray[fullscreenImageIndex - 1]);
   }, [photoArray, fullscreenedImage]);
 
   const fullscreenNext = useCallback(() => {
-    const photoIndex = photoArray.findIndex(
-      (photo) => photo === fullscreenedImage,
-    );
-    if (photoIndex === photoArray.length - 1) return;
-    setFullscreenedImage(photoArray[photoIndex + 1]);
+    if (fullscreenImageIndex === photoArray.length - 1) return;
+    setFullscreenedImage(photoArray[fullscreenImageIndex + 1]);
   }, [photoArray, fullscreenedImage]);
 
   useEffect(() => {
@@ -164,6 +160,8 @@ export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
           onClose={() => setFullscreenedImage(null)}
           prevImg={fullscreenPrevious}
           nextImg={fullscreenNext}
+          index={fullscreenImageIndex}
+          total={photoArray.length}
         />
       )}
       <ScrollNudge scrollRef={scrollRef} />

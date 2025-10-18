@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { Image, Outlines, useScroll } from "@react-three/drei";
-import { useRef, useState, forwardRef } from "react";
+import { useRef, useState, forwardRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
 
@@ -63,7 +63,7 @@ export const PhotoStack = ({ position }: { position: THREE.Vector3 }) => {
   const [topIndex, setTopIndex] = useState(0);
   const scroll = useScroll();
 
-  const handlePhotoClick = () => {
+  const handlePhotoClick = (goBackward: boolean = false) => {
     // Scroll to bottom
     if (scroll.el && scroll.offset < 1) {
       scroll.el.scrollTo({
@@ -73,9 +73,28 @@ export const PhotoStack = ({ position }: { position: THREE.Vector3 }) => {
     }
 
     if (scroll.offset > 0.9) {
-      setTopIndex((topIndex + 1) % photos.length);
+      setTopIndex((topIndex + (goBackward ? -1 : 1)) % photos.length);
     }
   };
+
+  // Add keyboard event listener for spacebar
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.code === "Space" || event.code === "ArrowRight") {
+        event.preventDefault(); // Prevent page scroll
+        handlePhotoClick();
+      }
+      if (event.code === "ArrowLeft") {
+        event.preventDefault(); // Prevent page scroll
+        handlePhotoClick(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handlePhotoClick]);
 
   const getPhotoPos = (index: number) => {
     return new THREE.Vector3(
@@ -121,7 +140,7 @@ export const PhotoStack = ({ position }: { position: THREE.Vector3 }) => {
       ref={photoStackRef}
       position={position}
       rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
-      onClick={handlePhotoClick}
+      onClick={() => handlePhotoClick()}
       onPointerOver={(e) => {
         document.body.style.cursor = "pointer";
       }}
