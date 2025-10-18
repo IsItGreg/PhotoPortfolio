@@ -2,8 +2,7 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import { ThreeDimPage } from "./ThreeDim/ThreeDimPage";
 import { TwoDimPage } from "./TwoDim/TwoDimPage";
 import { Navbar } from "./components/Navbar";
-import About from "./components/About";
-import { Images } from "./components/Images";
+import { Images } from "./TwoDim/Images";
 import { photoCards2023 } from "./photos";
 
 const App = () => {

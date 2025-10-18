@@ -9,8 +9,6 @@ interface ModalProps {
 }
 
 const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
-  const modalRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -38,21 +36,12 @@ const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
+      {/* Sticky note modal */}
       <div
-        ref={modalRef}
         className="relative w-full max-w-xs md:max-w-sm bg-yellow-200 p-6 shadow-xl animate-fade-in transform rotate-1 rounded-sm aspect-square"
         role="dialog"
         aria-modal="true"
-        aria-labelledby={title ? "modal-title" : undefined}
       >
-        {/* {title && (
-          <h2
-            id="modal-title"
-            className="mb-4 text-xl font-bold font-handwriting"
-          >
-            {title}
-          </h2>
-        )} */}
         <button
           onClick={onClose}
           className="absolute right-6 top-4 text-gray-600 hover:text-gray-800 font-bold"
@@ -60,7 +49,7 @@ const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
         >
           ✕
         </button>
-        <div className="font-handwriting text-xl md:text-3xl">{children}</div>
+        {children}
       </div>
     </div>,
     document.body,

@@ -5,7 +5,8 @@ import {
   getCompressedImageSrc,
   getFullresImageSrc,
 } from "../photos";
-import { ScrollNudge } from "./ScrollNudge";
+import { ScrollNudge } from "../components/ScrollNudge";
+import { FullScreenImage } from "../components/FullScreenImage";
 
 const PhotoCardPanel = ({
   photoCard,
@@ -125,7 +126,7 @@ export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
       className="h-full snap-y snap-mandatory overflow-y-auto"
       ref={scrollRef}
     >
-      <div
+      {/* <div
         className={`absolute left-0 top-0 z-20 flex flex-row h-screen w-screen items-center justify-center ${
           showFullscreen ? "" : "pointer-events-none"
         }`}
@@ -142,8 +143,8 @@ export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
           className="h-full w-1/4 cursor-e-resize"
           onClick={() => fullscreenNext()}
         ></div>
-      </div>
-      <div
+      </div> */}
+      {/* <div
         className={`pointer-events-none absolute left-0 top-0 z-10 flex h-screen w-screen items-center justify-center bg-black bg-opacity-90 backdrop-blur-sm transition duration-500 ease-in-out ${
           showFullscreen ? "opacity-100" : "opacity-0"
         }`}
@@ -156,7 +157,15 @@ export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
             src={getFullresImageSrc(fullscreenedImage?.yearFilename)}
           />
         )}
-      </div>
+      </div> */}
+      {showFullscreen && fullscreenedImage && (
+        <FullScreenImage
+          image={fullscreenedImage}
+          onClose={() => setFullscreenedImage(null)}
+          prevImg={fullscreenPrevious}
+          nextImg={fullscreenNext}
+        />
+      )}
       <ScrollNudge scrollRef={scrollRef} />
       {photoCards.map((photoCard, index) => {
         return (

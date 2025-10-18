@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Image, useScroll } from "@react-three/drei";
+import { Image, Outlines, useScroll } from "@react-three/drei";
 import { useRef, useState, forwardRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
@@ -12,8 +12,9 @@ const PhotoCard = forwardRef<
   }
 >(({ url, vertical }, ref) => {
   return (
-    <Image ref={ref} url={url} transparent={false}>
+    <Image ref={ref} url={url}>
       <planeGeometry args={vertical ? [4, 6] : [6, 4]} />
+      <Outlines thickness={0.1} color="black" />
     </Image>
   );
 });
@@ -28,25 +29,25 @@ export const PhotoStack = ({ position }: { position: THREE.Vector3 }) => {
   const photoRefs = useRef<(THREE.Mesh | null)[]>([]);
   const photos: Photo[] = [
     // botanical garden
-    { url: "/images/2022/DSCF4505.webp", vertical: false },
-    { url: "/images/2022/DSCF4507.webp", vertical: false },
-    { url: "/images/2022/DSCF4509.webp", vertical: false },
+    { url: "/images/2022/DSCF4505_bordered.webp", vertical: false },
+    { url: "/images/2022/DSCF4507_bordered.webp", vertical: false },
+    { url: "/images/2022/DSCF4509_bordered.webp", vertical: false },
     // pisco
-    { url: "/images/2023/DSCF7582.webp", vertical: false },
-    { url: "/images/2023/DSCF7635.webp", vertical: true },
-    { url: "/images/2023/DSCF7602.webp", vertical: false },
+    { url: "/images/2023/DSCF7582_bordered.webp", vertical: false },
+    { url: "/images/2023/DSCF7635_bordered.webp", vertical: true },
+    { url: "/images/2023/DSCF7602_bordered.webp", vertical: false },
 
     // other
-    { url: "/images/2022/DSCF5091.webp", vertical: true },
-    { url: "/images/2023/DSCF8140.webp", vertical: false },
-    { url: "/images/2023/DSCF7683.webp", vertical: false },
-    { url: "/images/2023/DSCF7704.webp", vertical: false },
+    { url: "/images/2022/DSCF5091_bordered.webp", vertical: true },
+    { url: "/images/2023/DSCF8140_bordered.webp", vertical: false },
+    { url: "/images/2023/DSCF7683_bordered.webp", vertical: false },
+    { url: "/images/2023/DSCF7704_bordered.webp", vertical: true },
 
-    { url: "/images/2023/DSCF7995.webp", vertical: true },
-    { url: "/images/2023/DSCF7867.webp", vertical: false },
+    { url: "/images/2023/DSCF7995_bordered.webp", vertical: true },
+    { url: "/images/2023/DSCF7867_bordered.webp", vertical: false },
 
-    { url: "/images/2023/DSCF8837.webp", vertical: false },
-    { url: "/images/2023/DSCF8814.webp", vertical: true },
+    { url: "/images/2023/DSCF8837_bordered.webp", vertical: false },
+    { url: "/images/2023/DSCF8814_bordered.webp", vertical: true },
   ];
   // const photos = [
   //   "/testimgs/1.jpg",

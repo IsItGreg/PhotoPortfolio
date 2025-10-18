@@ -1,6 +1,6 @@
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { useScroll, useTexture } from "@react-three/drei";
+import { useScroll, useTexture, Text } from "@react-three/drei";
 import { useRef } from "react";
 
 const WIDTH = 8;
@@ -12,23 +12,19 @@ const Panel = ({
   rotation,
   width,
   height,
+  isLid = false,
 }: {
   pos: THREE.Vector3;
   rotation: THREE.Euler;
   width: number;
   height: number;
+  isLid?: boolean;
 }) => {
   const props = useTexture({
     map: "Paper004_1K-JPG_Color.jpg",
     normalMap: "Paper004_1K-JPG_NormalDX.jpg",
     roughnessMap: "Paper004_1K-JPG_Roughness.jpg",
   });
-
-  const textureScaleY = 1 / WIDTH;
-  const textureScaleX = 1 / HEIGHT;
-  // props.map.wrapS = THREE.RepeatWrapping;
-  // props.map.wrapT = THREE.RepeatWrapping;
-  // props.map.repeat.set(width * textureScaleX, height * textureScaleY);
 
   return (
     <mesh position={pos} rotation={rotation} castShadow receiveShadow>
@@ -38,6 +34,58 @@ const Panel = ({
         side={THREE.DoubleSide}
         color="#ffffff"
       />
+      {isLid && (
+        <>
+          <Text
+            font={"/LOSTLATE.ttf"}
+            fontSize={1}
+            color="white"
+            position={[0, 0, -0.1]}
+            rotation={[0, Math.PI, Math.PI]}
+            scale={3}
+            textAlign="center"
+          >
+            scroll
+            {"\n"}
+            down
+          </Text>
+          <group position={[2.5, -3, 0.1]} rotation={[0, 0, 0]}>
+            <Text
+              font={"/LOSTLATE.ttf"}
+              fontSize={1}
+              color="white"
+              scale={0.5}
+              position={[0, -0.2, 0]}
+              rotation={[0, 0, 0.2]}
+              textAlign="center"
+              material={new THREE.MeshStandardMaterial({ color: "white" })}
+            >
+              tap here
+            </Text>
+            <Text
+              font={"/LOSTLATE.ttf"}
+              fontSize={1}
+              color="white"
+              position={[1.17, -0.3, 0]}
+              rotation={[0, 0, Math.PI * 0.75]}
+              material={new THREE.MeshStandardMaterial({ color: "white" })}
+            >
+              ^
+            </Text>
+            <Text
+              font={"/LOSTLATE.ttf"}
+              fontSize={1}
+              scale={0.9}
+              color="white"
+              position={[0.9, -0.16, 0]}
+              rotation={[0, 0, 3.59]}
+              material={new THREE.MeshStandardMaterial({ color: "white" })}
+            >
+              C
+            </Text>
+          </group>
+        </>
+      )}
     </mesh>
   );
 };
@@ -92,6 +140,7 @@ const BoxLid = () => {
         rotation={new THREE.Euler(Math.PI / 2, 0, 0)}
         width={WIDTH}
         height={WIDTH + THICKNESS}
+        isLid={true}
       />
       <group ref={tabRef} position={[0, 0, WIDTH]}>
         <Panel
@@ -198,22 +247,45 @@ const BoxBottom = () => {
 };
 
 export const Box = () => {
+  const scroll = useScroll();
+  const handleBoxClick = () => {
+    // Scroll to bottom
+    if (scroll.el && scroll.offset < 1) {
+      scroll.el.scrollTo({
+        top: scroll.el.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
-    <>
+    <group
+      onClick={handleBoxClick}
+      onPointerOver={(e) => {
+        if (scroll.offset < 1) {
+          document.body.style.cursor = "pointer";
+        }
+      }}
+      onPointerOut={() => {
+        if (scroll.offset < 1) {
+          document.body.style.cursor = "default";
+        }
+      }}
+    >
       <BoxLid />
       <BoxBottom />
-    </>
+    </group>
   );
 };
 
 export const Mat = () => {
-  const matProps = useTexture({
-    map: "Carpet006_1K-JPG_Color.jpg",
-    displacementMap: "Carpet006_1K-JPG_Displacement.jpg",
-    normalMap: "Carpet006_1K-JPG_NormalDX.jpg",
-    roughnessMap: "Carpet006_1K-JPG_Roughness.jpg",
-    aoMap: "Carpet006_1K-JPG_AmbientOcclusion.jpg",
-  });
+  // const matProps = useTexture({
+  //   map: "Carpet006_1K-JPG_Color.jpg",
+  //   displacementMap: "Carpet006_1K-JPG_Displacement.jpg",
+  //   normalMap: "Carpet006_1K-JPG_NormalDX.jpg",
+  //   roughnessMap: "Carpet006_1K-JPG_Roughness.jpg",
+  //   aoMap: "Carpet006_1K-JPG_AmbientOcclusion.jpg",
+  // });
 
   const floorProps = useTexture({
     map: "Wood051_1K-JPG_Color.jpg",

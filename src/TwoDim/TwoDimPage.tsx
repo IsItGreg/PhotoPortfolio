@@ -1,6 +1,6 @@
 import { Copyright } from "../components/Copyright";
 import { Header } from "../components/Header";
-import { Images } from "../components/Images";
+import { Images } from "./Images";
 import { favoriteCards } from "../photos";
 
 export const TwoDimPage = () => {
