@@ -6,22 +6,34 @@ export const Header = ({ isTwoDim = false }: { isTwoDim?: boolean }) => {
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
   return (
     <>
-      <div className="fixed flex flex-col z-10 w-full pt-8 text-white drop-shadow-lg">
+      <div className="fixed z-10 flex w-full flex-col pt-8 text-white drop-shadow-lg">
         <div className="mx-auto">
-          <span className="text-6xl font-lost select-none">
+          <span className="select-none font-lost text-6xl">
             Gregory Smelkov
           </span>
         </div>
-        <div className="mx-auto w-32 h-px bg-white drop-shadow-lg" />
-        <div className="mx-auto flex flex-row gap-4 font-lost text-2xl select-none drop-shadow-lg">
+        <div className="mx-auto h-px w-40 bg-white drop-shadow-lg" />
+        <div className="mx-auto flex select-none flex-row gap-4 pt-0.5 font-lost text-2xl font-light drop-shadow-lg">
           <NavLink
-            className="hover:text-orange-400 transition-all duration-300 ease-in-out"
-            to={isTwoDim ? "/" : "/2d"}
+            className="transition-all duration-300 ease-in-out hover:text-orange-400"
+            to={"/"}
           >
-            {isTwoDim ? "3D" : "2D"}
+            Box of photos
+          </NavLink>
+          <NavLink
+            className="transition-all duration-300 ease-in-out hover:text-orange-400"
+            to={"/nyc"}
+          >
+            NYC
+          </NavLink>
+          <NavLink
+            className="transition-all duration-300 ease-in-out hover:text-orange-400"
+            to={"/travel"}
+          >
+            Travel
           </NavLink>
           <button
-            className="hover:text-orange-400 hover:cursor-pointer transition-all duration-300 ease-in-out"
+            className="transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-orange-400"
             onClick={() => setAboutModalOpen(true)}
           >
             ABOUT

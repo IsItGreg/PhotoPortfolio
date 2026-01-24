@@ -4,58 +4,45 @@ import { useRef, useState, forwardRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
 
+type Photo = {
+  url: string;
+  aspectRatio: number;
+  vertical: boolean;
+};
+
+const PHOTO_BASE_SIZE = 5;
+
 const PhotoCard = forwardRef<
   THREE.Mesh,
   {
     url: string;
-    vertical: boolean;
+    aspectRatio: number;
   }
->(({ url, vertical }, ref) => {
+>(({ url, aspectRatio }, ref) => {
+  const width =
+    aspectRatio >= 1 ? PHOTO_BASE_SIZE : PHOTO_BASE_SIZE * aspectRatio;
+  const height =
+    aspectRatio >= 1 ? PHOTO_BASE_SIZE / aspectRatio : PHOTO_BASE_SIZE;
+
   return (
     <Image ref={ref} url={url}>
-      <planeGeometry args={vertical ? [4, 6] : [6, 4]} />
+      <planeGeometry args={[width, height]} />
       <Outlines thickness={0.1} color="black" />
     </Image>
   );
 });
 
-type Photo = {
-  url: string;
-  vertical: boolean;
-};
-
 export const PhotoStack = ({ position }: { position: THREE.Vector3 }) => {
   const photoStackRef = useRef<THREE.Group>(null);
   const photoRefs = useRef<(THREE.Mesh | null)[]>([]);
-  const photos: Photo[] = [
-    // botanical garden
-    { url: "/images/2022/DSCF4505_bordered.webp", vertical: false },
-    { url: "/images/2022/DSCF4507_bordered.webp", vertical: false },
-    { url: "/images/2022/DSCF4509_bordered.webp", vertical: false },
-    // pisco
-    { url: "/images/2023/DSCF7582_bordered.webp", vertical: false },
-    { url: "/images/2023/DSCF7635_bordered.webp", vertical: true },
-    { url: "/images/2023/DSCF7602_bordered.webp", vertical: false },
+  const [photos, setPhotos] = useState<Photo[]>([]);
 
-    // other
-    { url: "/images/2022/DSCF5091_bordered.webp", vertical: true },
-    { url: "/images/2023/DSCF8140_bordered.webp", vertical: false },
-    { url: "/images/2023/DSCF7683_bordered.webp", vertical: false },
-    { url: "/images/2023/DSCF7704_bordered.webp", vertical: true },
-
-    { url: "/images/2023/DSCF7995_bordered.webp", vertical: true },
-    { url: "/images/2023/DSCF7867_bordered.webp", vertical: false },
-
-    { url: "/images/2023/DSCF8837_bordered.webp", vertical: false },
-    { url: "/images/2023/DSCF8814_bordered.webp", vertical: true },
-  ];
-  // const photos = [
-  //   "/testimgs/1.jpg",
-  //   "/testimgs/2.png",
-  //   "/testimgs/3.jpg",
-  //   "/testimgs/4.jpg",
-  //   "/testimgs/5.jpg",
-  // ];
+  useEffect(() => {
+    fetch("/images/threedimbox/manifest.json")
+      .then((res) => res.json())
+      .then((data: Photo[]) => setPhotos([...data].reverse()))
+      .catch((err) => console.error("Failed to load photo manifest:", err));
+  }, []);
 
   if (photoRefs.current.length !== photos.length) {
     photoRefs.current = Array(photos.length).fill(null);
@@ -72,7 +59,7 @@ export const PhotoStack = ({ position }: { position: THREE.Vector3 }) => {
       });
     }
 
-    if (scroll.offset > 0.9) {
+    if (scroll.offset > 0.9 && photos.length > 0) {
       setTopIndex((topIndex + (goBackward ? -1 : 1)) % photos.length);
     }
   };
@@ -153,7 +140,7 @@ export const PhotoStack = ({ position }: { position: THREE.Vector3 }) => {
           key={photo.url}
           ref={(el) => (photoRefs.current[index] = el)}
           url={photo.url}
-          vertical={photo.vertical}
+          aspectRatio={photo.aspectRatio}
         />
       ))}
     </group>

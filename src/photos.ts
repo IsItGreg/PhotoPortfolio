@@ -7,11 +7,11 @@ export type Photo = {
 };
 
 export const getCompressedImageSrc = (yearFilename: string) => {
-  return `${process.env.PUBLIC_URL}/images/${yearFilename}.webp`;
+  return `${process.env.PUBLIC_URL}/images/twodim/${yearFilename}_small.webp`;
 };
 
 export const getFullresImageSrc = (yearFilename: string) => {
-  return `${process.env.PUBLIC_URL}/images/${yearFilename}.jpg`;
+  return `${process.env.PUBLIC_URL}/images/twodim/${yearFilename}_full.webp`;
 };
 
 type PhotoRow = Photo[];
@@ -404,3 +404,114 @@ export const favoriteCards: PhotoCard[] = [
   colcaCanyon,
   peruOther,
 ];
+
+export const travelPhotoCards: PhotoCard[] = [
+  barcelonaBotanicalGarden,
+  machuPicchuMountains,
+  piscoFishermen,
+  colcaCanyon,
+  peruOther,
+];
+
+const nycCard: PhotoCard = {
+  rows: [
+    [
+      {
+        yearFilename: "2025/DSCF0420",
+        title: "NYC Park",
+        location: "NYC, NY",
+        date: "Aug, 2025",
+        aspect: "vertical",
+      },
+      {
+        yearFilename: "2025/DSCF0431",
+        title: "Christmas lights on balcony",
+        location: "NYC, NY",
+        date: "Aug, 2025",
+        aspect: "vertical",
+      },
+      {
+        yearFilename: "2025/DSCF0460",
+        title: "Ladders",
+        location: "NYC, NY",
+        date: "Aug, 2025",
+        aspect: "vertical",
+      },
+    ],
+    [
+      {
+        yearFilename: "2025/DSCF1818",
+        title: "Bridge",
+        location: "NYC, NY",
+        date: "Aug, 2025",
+        aspect: "vertical",
+      },
+      {
+        yearFilename: "2025/DSCF0935",
+        title: "Deadass",
+        location: "NYC, NY",
+        date: "Aug, 2025",
+        aspect: "vertical",
+      },
+      {
+        yearFilename: "2025/DSCF1929",
+        title: "Squirrel",
+        location: "NYC, NY",
+        date: "Aug, 2025",
+        aspect: "vertical",
+      },
+    ],
+  ],
+};
+
+const nycParade: PhotoCard = {
+  rows: [
+    [
+      {
+        yearFilename: "2025/DSCF1975",
+        title: "Indigenous Peoples Parade",
+        location: "NYC, NY",
+        date: "Oct, 2025",
+        aspect: "vertical",
+      },
+      {
+        yearFilename: "2025/DSCF1938",
+        title: "Indigenous Peoples Parade",
+        location: "NYC, NY",
+        date: "Oct, 2025",
+        aspect: "vertical",
+      },
+      {
+        yearFilename: "2025/DSCF1951",
+        title: "Indigenous Peoples Parade",
+        location: "NYC, NY",
+        date: "Oct, 2025",
+        aspect: "vertical",
+      },
+      {
+        yearFilename: "2025/DSCF1943",
+        title: "Indigenous Peoples Parade",
+        location: "NYC, NY",
+        date: "Oct, 2025",
+        aspect: "vertical",
+      },
+      // {
+      //   yearFilename: "2025/DSCF1964",
+      //   title: "Indigenous Peoples Parade",
+      //   location: "NYC, NY",
+      //   date: "Oct, 2025",
+      //   aspect: "vertical",
+      // },
+    ],
+    [
+      {
+        yearFilename: "2025/DSCF1933",
+        title: "Indigenous Peoples Parade wide",
+        location: "NYC, NY",
+        date: "Aug, 2025",
+      },
+    ],
+  ],
+};
+
+export const nycPhotoCards: PhotoCard[] = [nycParade, nycCard];
