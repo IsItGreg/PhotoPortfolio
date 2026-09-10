@@ -1,0 +1,475 @@
+{
+  "version": 2,
+  "pages": [
+    {
+      "id": "nyc-page-1",
+      "title": "NYC — Page 1",
+      "visible": true,
+      "rows": [
+        [
+          {
+            "yearFilename": "2025/DSCF1975",
+            "title": "Indigenous Peoples Parade",
+            "location": "NYC, NY",
+            "date": "Oct, 2025",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2025/DSCF1938",
+            "title": "Indigenous Peoples Parade",
+            "location": "NYC, NY",
+            "date": "Oct, 2025",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2025/DSCF1951",
+            "title": "Indigenous Peoples Parade",
+            "location": "NYC, NY",
+            "date": "Oct, 2025",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2025/DSCF1943",
+            "title": "Indigenous Peoples Parade",
+            "location": "NYC, NY",
+            "date": "Oct, 2025",
+            "aspect": "vertical"
+          }
+        ],
+        [
+          {
+            "yearFilename": "2025/DSCF1933",
+            "title": "Indigenous Peoples Parade wide",
+            "location": "NYC, NY",
+            "date": "Aug, 2025"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nyc-page-2",
+      "title": "NYC — Page 2",
+      "visible": true,
+      "rows": [
+        [
+          {
+            "yearFilename": "2025/DSCF0420",
+            "title": "NYC Park",
+            "location": "NYC, NY",
+            "date": "Aug, 2025",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2025/DSCF0431",
+            "title": "Christmas lights on balcony",
+            "location": "NYC, NY",
+            "date": "Aug, 2025",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2025/DSCF0460",
+            "title": "Ladders",
+            "location": "NYC, NY",
+            "date": "Aug, 2025",
+            "aspect": "vertical"
+          }
+        ],
+        [
+          {
+            "yearFilename": "2025/DSCF1818",
+            "title": "Bridge",
+            "location": "NYC, NY",
+            "date": "Aug, 2025",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2025/DSCF0935",
+            "title": "Deadass",
+            "location": "NYC, NY",
+            "date": "Aug, 2025",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2025/DSCF1929",
+            "title": "Squirrel",
+            "location": "NYC, NY",
+            "date": "Aug, 2025",
+            "aspect": "vertical"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "travel-page-1",
+      "title": "Travel — Page 1",
+      "visible": true,
+      "rows": [
+        [
+          {
+            "yearFilename": "2022/DSCF4507",
+            "title": "Botanical Garden 2",
+            "location": "Barcelona, Spain",
+            "date": "Jan, 2022"
+          },
+          {
+            "yearFilename": "2022/DSCF4509",
+            "title": "Botanical Garden 3",
+            "location": "Barcelona, Spain",
+            "date": "Jan, 2022"
+          }
+        ],
+        [
+          {
+            "yearFilename": "2022/DSCF4505",
+            "title": "Botanical Garden 1",
+            "location": "Barcelona, Spain",
+            "date": "Jan, 2022"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "travel-page-2",
+      "title": "Travel — Page 2",
+      "visible": true,
+      "rows": [
+        [
+          {
+            "yearFilename": "2023/DSCF8837",
+            "title": "Mountains",
+            "location": "Machupicchu, Peru",
+            "date": "Nov, 2023"
+          },
+          {
+            "yearFilename": "2023/DSCF8814",
+            "title": "Mountains",
+            "location": "Machupicchu, Peru",
+            "date": "Nov, 2023",
+            "aspect": "vertical"
+          }
+        ],
+        [
+          {
+            "yearFilename": "2023/DSCF8817",
+            "title": "Mountains",
+            "location": "Machupicchu, Peru",
+            "date": "Nov, 2023"
+          },
+          {
+            "yearFilename": "2023/DSCF8803",
+            "title": "Mountains",
+            "location": "Machupicchu, Peru",
+            "date": "Nov, 2023"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "travel-page-3",
+      "title": "Travel — Page 3",
+      "visible": true,
+      "rows": [
+        [
+          {
+            "yearFilename": "2023/DSCF7635",
+            "title": "Pisco Fishermen",
+            "location": "Pisco, Peru",
+            "date": "Nov, 2023",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2023/DSCF7582",
+            "title": "Pisco Fishermen",
+            "location": "Pisco, Peru",
+            "date": "Nov, 2023"
+          }
+        ],
+        [
+          {
+            "yearFilename": "2023/DSCF7602",
+            "title": "Pisco Fishermen",
+            "location": "Pisco, Peru",
+            "date": "Nov, 2023"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "travel-page-4",
+      "title": "Travel — Page 4",
+      "visible": true,
+      "rows": [
+        [
+          {
+            "yearFilename": "2023/DSCF7867",
+            "title": "Colca Canyon",
+            "location": "Arequipa, Peru",
+            "date": "Nov, 2023"
+          },
+          {
+            "yearFilename": "2023/DSCF7909",
+            "title": "Colca Canyon",
+            "location": "Arequipa, Peru",
+            "date": "Nov, 2023",
+            "aspect": "vertical"
+          }
+        ],
+        [
+          {
+            "yearFilename": "2023/DSCF7995",
+            "title": "Colca Canyon",
+            "location": "Arequipa, Peru",
+            "date": "Nov, 2023",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2023/DSCF8025",
+            "title": "Colca Canyon",
+            "location": "Arequipa, Peru",
+            "date": "Nov, 2023"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "travel-page-5",
+      "title": "Travel — Page 5",
+      "visible": true,
+      "rows": [
+        [
+          {
+            "yearFilename": "2023/DSCF7683",
+            "title": "Desert",
+            "location": "Huacachina Peru",
+            "date": "Nov, 2023"
+          },
+          {
+            "yearFilename": "2023/DSCF8198",
+            "title": "Rainforest Lake",
+            "location": "Puerto Maldonado, Peru",
+            "date": "Nov, 2023",
+            "aspect": "vertical"
+          }
+        ],
+        [
+          {
+            "yearFilename": "2023/DSCF7704",
+            "title": "Colca Canyon",
+            "location": "Arequipa, Peru",
+            "date": "Nov, 2023",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2023/DSCF8140",
+            "title": "Rainforest Boat",
+            "location": "Puerto Maldonado, Peru",
+            "date": "Nov, 2023"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "page-b69d2b54-eb5e-497b-98a1-0418a653a723",
+      "title": "Infrared Test 1",
+      "visible": true,
+      "rows": [
+        [
+          {
+            "yearFilename": "2026/infrared/DSCF7528-Edit",
+            "title": "DSCF7528-Edit",
+            "location": "",
+            "date": "",
+            "aspect": "horizontal"
+          },
+          {
+            "yearFilename": "2026/infrared/DSCF7512-Edit",
+            "title": "DSCF7512-Edit",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2026/infrared/DSCF7559-Edit-2",
+            "title": "DSCF7559-Edit-2",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          }
+        ],
+        [
+          {
+            "yearFilename": "2026/infrared/DSCF7490-Edit",
+            "title": "DSCF7490-Edit",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2026/infrared/DSCF7561-Edit-2",
+            "title": "DSCF7561-Edit-2",
+            "location": "",
+            "date": "",
+            "aspect": "horizontal"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "page-9944f83a-4429-4560-81ec-a08140c440cb",
+      "title": "Untitled page",
+      "visible": false,
+      "rows": [
+        []
+      ]
+    },
+    {
+      "id": "page-b8e78765-74a4-4e7c-b4e9-429a6c7b29c5",
+      "title": "Infrared Flowers",
+      "visible": true,
+      "rows": [
+        [
+          {
+            "yearFilename": "2026/infrared/DSCF7748",
+            "title": "DSCF7748",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2026/infrared/DSCF7766",
+            "title": "DSCF7766",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2026/infrared/DSCF7775",
+            "title": "DSCF7775",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          }
+        ],
+        [
+          {
+            "yearFilename": "2026/infrared/DSCF7779",
+            "title": "DSCF7779",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2026/infrared/DSCF7789",
+            "title": "DSCF7789",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2026/infrared/DSCF7804",
+            "title": "DSCF7804",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "page-243e2481-71fc-46e1-8b17-5705128729b0",
+      "title": "Infrared Misc",
+      "visible": true,
+      "rows": [
+        [
+          {
+            "yearFilename": "2026/infrared/DSCF7651-Edit",
+            "title": "DSCF7651-Edit",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2026/infrared/DSCF7687",
+            "title": "DSCF7687",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2026/infrared/DSCF7645-Edit",
+            "title": "DSCF7645-Edit",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2026/infrared/DSCF7531",
+            "title": "DSCF7531",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          }
+        ],
+        [
+          {
+            "yearFilename": "2026/infrared/DSCF7607",
+            "title": "DSCF7607",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2026/infrared/DSCF7734",
+            "title": "DSCF7734",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          },
+          {
+            "yearFilename": "2026/infrared/DSCF7771",
+            "title": "DSCF7771",
+            "location": "",
+            "date": "",
+            "aspect": "vertical"
+          }
+        ]
+      ]
+    }
+  ],
+  "galleries": [
+    {
+      "id": "nyc",
+      "title": "NYC",
+      "slug": "nyc",
+      "visible": true,
+      "pageIds": [
+        "nyc-page-1",
+        "nyc-page-2"
+      ]
+    },
+    {
+      "id": "travel",
+      "title": "Travel",
+      "slug": "travel",
+      "visible": true,
+      "pageIds": [
+        "travel-page-1",
+        "travel-page-2",
+        "travel-page-3",
+        "travel-page-4",
+        "travel-page-5"
+      ]
+    },
+    {
+      "id": "infrared",
+      "title": "Infrared",
+      "slug": "infrared",
+      "visible": true,
+      "pageIds": [
+        "page-b69d2b54-eb5e-497b-98a1-0418a653a723",
+        "page-b8e78765-74a4-4e7c-b4e9-429a6c7b29c5",
+        "page-243e2481-71fc-46e1-8b17-5705128729b0"
+      ]
+    }
+  ]
+}
