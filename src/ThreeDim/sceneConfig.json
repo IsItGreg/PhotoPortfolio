@@ -7,7 +7,7 @@
     {
       "id": "scroll",
       "text": "scroll\ndown",
-      "fontSize": 4,
+      "fontSize": 3.4,
       "lineHeight": 0.76,
       "scale": 1,
       "position": [0, 0.055, 0],
