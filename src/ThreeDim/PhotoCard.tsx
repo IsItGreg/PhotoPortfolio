@@ -1,8 +1,17 @@
 import * as THREE from "three";
 import { Image, Outlines, useScroll } from "@react-three/drei";
-import { useRef, useState, forwardRef, useEffect } from "react";
+import {
+  Component,
+  ReactNode,
+  Suspense,
+  useCallback,
+  useRef,
+  useState,
+  useEffect,
+} from "react";
 import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
+import { useRequestedPhotos, wrapPhotoIndex } from "./photoStackLoading";
 
 type Photo = {
   url: string;
@@ -12,57 +21,92 @@ type Photo = {
 
 const PHOTO_BASE_SIZE = 5;
 
-const PhotoCard = forwardRef<
-  THREE.Mesh,
-  {
-    url: string;
-    aspectRatio: number;
+type PhotoCardProps = { url: string; aspectRatio: number; requested: boolean };
+
+class PhotoLoadBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
   }
->(({ url, aspectRatio }, ref) => {
+  render() {
+    return this.state.failed ? this.props.fallback : this.props.children;
+  }
+}
+
+const PhotoCard = ({ url, aspectRatio, requested }: PhotoCardProps) => {
   const width =
     aspectRatio >= 1 ? PHOTO_BASE_SIZE : PHOTO_BASE_SIZE * aspectRatio;
   const height =
     aspectRatio >= 1 ? PHOTO_BASE_SIZE / aspectRatio : PHOTO_BASE_SIZE;
 
-  return (
-    <Image ref={ref} url={url}>
+  const paper = (
+    <mesh>
       <planeGeometry args={[width, height]} />
+      <meshBasicMaterial color="white" />
       <Outlines thickness={0.1} color="black" />
-    </Image>
+    </mesh>
   );
-});
+  if (!requested) return paper;
+  return (
+    <PhotoLoadBoundary fallback={paper}>
+      <Suspense fallback={paper}>
+        <Image url={url}>
+          <planeGeometry args={[width, height]} />
+          <Outlines thickness={0.1} color="black" />
+        </Image>
+      </Suspense>
+    </PhotoLoadBoundary>
+  );
+};
 
 export const PhotoStack = ({ position }: { position: THREE.Vector3 }) => {
   const photoStackRef = useRef<THREE.Group>(null);
-  const photoRefs = useRef<(THREE.Mesh | null)[]>([]);
+  const photoRefs = useRef<(THREE.Group | null)[]>([]);
   const [photos, setPhotos] = useState<Photo[]>([]);
 
   useEffect(() => {
-    fetch("/images/threedimbox/manifest.json")
-      .then((res) => res.json())
+    const controller = new AbortController();
+    fetch("/images/threedimbox/manifest.json", { signal: controller.signal })
+      .then((res) => {
+        if (!res.ok) throw new Error("Photo manifest unavailable");
+        return res.json();
+      })
       .then((data: Photo[]) => setPhotos([...data].reverse()))
-      .catch((err) => console.error("Failed to load photo manifest:", err));
+      .catch((err) => {
+        if (err.name !== "AbortError")
+          console.error("Failed to load photo manifest:", err);
+      });
+    return () => controller.abort();
   }, []);
 
   if (photoRefs.current.length !== photos.length) {
     photoRefs.current = Array(photos.length).fill(null);
   }
   const [topIndex, setTopIndex] = useState(0);
+  const requested = useRequestedPhotos(topIndex, photos.length);
   const scroll = useScroll();
 
-  const handlePhotoClick = (goBackward: boolean = false) => {
-    // Scroll to bottom
-    if (scroll.el && scroll.offset < 1) {
-      scroll.el.scrollTo({
-        top: scroll.el.scrollHeight,
-        behavior: "smooth",
-      });
-    }
+  const handlePhotoClick = useCallback(
+    (goBackward: boolean = false) => {
+      // Scroll to bottom
+      if (scroll.el && scroll.offset < 1) {
+        scroll.el.scrollTo({
+          top: scroll.el.scrollHeight,
+          behavior: "smooth",
+        });
+      }
 
-    if (scroll.offset > 0.9 && photos.length > 0) {
-      setTopIndex((topIndex + (goBackward ? -1 : 1)) % photos.length);
-    }
-  };
+      if (scroll.offset > 0.9 && photos.length > 0) {
+        setTopIndex((index) =>
+          wrapPhotoIndex(index + (goBackward ? -1 : 1), photos.length),
+        );
+      }
+    },
+    [scroll, photos.length],
+  );
 
   // Add keyboard event listener for spacebar
   useEffect(() => {
@@ -127,8 +171,15 @@ export const PhotoStack = ({ position }: { position: THREE.Vector3 }) => {
       ref={photoStackRef}
       position={position}
       rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
-      onClick={() => handlePhotoClick()}
+      onClick={(event) => {
+        // R3F also delivers a click to every intersected card behind this one.
+        // Consume the nearest hit before the functional index update: one
+        // physical click must advance once, not once per overlapping card.
+        event.stopPropagation();
+        handlePhotoClick();
+      }}
       onPointerOver={(e) => {
+        e.stopPropagation();
         document.body.style.cursor = "pointer";
       }}
       onPointerOut={() => {
@@ -136,12 +187,13 @@ export const PhotoStack = ({ position }: { position: THREE.Vector3 }) => {
       }}
     >
       {photos.map((photo, index) => (
-        <PhotoCard
-          key={photo.url}
-          ref={(el) => (photoRefs.current[index] = el)}
-          url={photo.url}
-          aspectRatio={photo.aspectRatio}
-        />
+        <group key={photo.url} ref={(el) => (photoRefs.current[index] = el)}>
+          <PhotoCard
+            url={photo.url}
+            aspectRatio={photo.aspectRatio}
+            requested={requested.has(index)}
+          />
+        </group>
       ))}
     </group>
   );

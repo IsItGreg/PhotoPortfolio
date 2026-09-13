@@ -27,10 +27,19 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "photos:optimize": "python3 localimages/scripts/photo_assets.py",
+    "photos:pages": "python3 scripts/page-studio/server.py",
+    "photos:publish": "python3 scripts/prepare-public-photos.py",
+    "scene:bake": "python3 scripts/bake-three-scene.py",
+    "scene:check": "python3 -m unittest discover -s scripts -p 'test_three_scene.py'",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "prestart": "npm run scene:bake && npm run photos:publish",
+    "prebuild": "npm run scene:bake && npm run photos:publish",
+    "build": "node scripts/build-production.cjs",
+    "postbuild": "python3 scripts/prepare-public-photos.py --build && node scripts/verify-scene-build.cjs && python3 scripts/prepare-public-photos.py --check-build",
+    "preview": "node scripts/preview.cjs",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

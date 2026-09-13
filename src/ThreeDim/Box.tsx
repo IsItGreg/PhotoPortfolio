@@ -1,255 +1,181 @@
-import { useFrame } from "@react-three/fiber";
+import { createPortal, useFrame, useLoader } from "@react-three/fiber";
+import { useScroll, useTexture } from "@react-three/drei";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
-import { useScroll, useTexture, Text } from "@react-three/drei";
-import { useRef } from "react";
+import { clone as cloneSkeleton } from "three/examples/jsm/utils/SkeletonUtils.js";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { createBoxScrollTimeline } from "./boxMotion";
+import BoxLabels from "./BoxLabels";
+import { sceneAssets } from "./sceneAssets";
+import config from "./sceneConfig.json";
+import { defaultInspection, SceneInspection } from "./sceneTypes";
 
-const WIDTH = 8;
-const HEIGHT = 2.75;
-const THICKNESS = 0.1;
+const DISPLAY_WIDTH = config.displayWidth;
+const MODEL_WIDTH_METERS = config.modelWidthInches * 0.0254;
+const MODEL_SCALE = DISPLAY_WIDTH / MODEL_WIDTH_METERS;
+const MODEL_URL = sceneAssets.model;
 
-const Panel = ({
-  pos,
-  rotation,
-  width,
-  height,
-  isLid = false,
+type BoxControls = {
+  lid: THREE.Object3D;
+  tuck: THREE.Object3D;
+  leftEar: THREE.Object3D;
+  rightEar: THREE.Object3D;
+  leftWing: THREE.Object3D;
+  rightWing: THREE.Object3D;
+};
+
+const requiredNode = (root: THREE.Object3D, name: string) => {
+  const node = root.getObjectByName(name);
+  if (!node) {
+    throw new Error(`Cardboard box is missing required rig control: ${name}`);
+  }
+  return node;
+};
+
+const RiggedCardboardBox = ({
+  inspection,
 }: {
-  pos: THREE.Vector3;
-  rotation: THREE.Euler;
-  width: number;
-  height: number;
-  isLid?: boolean;
+  inspection: SceneInspection;
 }) => {
-  const props = useTexture({
-    map: "Paper004_1K-JPG_Color.jpg",
-    normalMap: "Paper004_1K-JPG_NormalDX.jpg",
-    roughnessMap: "Paper004_1K-JPG_Roughness.jpg",
-  });
-
-  return (
-    <mesh position={pos} rotation={rotation} castShadow receiveShadow>
-      <boxGeometry args={[width, height, THICKNESS]} />
-      <meshStandardMaterial
-        map={props.map}
-        side={THREE.DoubleSide}
-        color="#ffffff"
-      />
-      {isLid && (
-        <>
-          <Text
-            font={"/LOSTLATE.ttf"}
-            fontSize={1}
-            color="white"
-            position={[0, 0, -0.1]}
-            rotation={[0, Math.PI, Math.PI]}
-            scale={3}
-            textAlign="center"
-          >
-            scroll
-            {"\n"}
-            down
-          </Text>
-          <group position={[2.5, -3, 0.1]} rotation={[0, 0, 0]}>
-            <Text
-              font={"/LOSTLATE.ttf"}
-              fontSize={1}
-              color="white"
-              scale={0.5}
-              position={[0, -0.2, 0]}
-              rotation={[0, 0, 0.2]}
-              textAlign="center"
-              material={new THREE.MeshStandardMaterial({ color: "white" })}
-            >
-              tap here
-            </Text>
-            <Text
-              font={"/LOSTLATE.ttf"}
-              fontSize={1}
-              color="white"
-              position={[1.17, -0.3, 0]}
-              rotation={[0, 0, Math.PI * 0.75]}
-              material={new THREE.MeshStandardMaterial({ color: "white" })}
-            >
-              ^
-            </Text>
-            <Text
-              font={"/LOSTLATE.ttf"}
-              fontSize={1}
-              scale={0.9}
-              color="white"
-              position={[0.9, -0.16, 0]}
-              rotation={[0, 0, 3.59]}
-              material={new THREE.MeshStandardMaterial({ color: "white" })}
-            >
-              C
-            </Text>
-          </group>
-        </>
-      )}
-    </mesh>
-  );
-};
-
-const BoxLid = () => {
   const scroll = useScroll();
-  const lidRef = useRef<THREE.Group>(null);
-  const tabRef = useRef<THREE.Group>(null);
-  const rightTabRef = useRef<THREE.Mesh>(null);
-  const leftTabRef = useRef<THREE.Mesh>(null);
+  const { scene, animations } = useLoader(GLTFLoader, MODEL_URL);
+  // The tray is baked; moving panels/liners share a compact skin. Clone its
+  // skeleton so the hinges belong to this instance rather than the GLTF cache.
+  const model = useMemo(() => {
+    const instance = cloneSkeleton(scene);
+    // Inspector material changes must not mutate the shared loader cache.
+    instance.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        child.material = Array.isArray(child.material)
+          ? child.material.map((material) => material.clone())
+          : child.material.clone();
+      }
+    });
+    return instance;
+  }, [scene]);
 
-  useFrame((state, delta) => {
-    const offset = scroll.offset;
-    const lidDelay = 0.4;
-    // console.log(offset);
-    // console.log(Math.max(offset - lidDelay, 0));
-    if (lidRef.current) {
-      lidRef.current.rotation.x =
-        (Math.cos(Math.max(offset - lidDelay, 0)) * -0.5 + 0.5) * -8 * Math.PI;
-    }
-    if (tabRef.current) {
-      tabRef.current.rotation.x = Math.atan(offset) * -1 * Math.PI;
-    }
-    if (rightTabRef.current) {
-      rightTabRef.current.rotation.y =
-        0 +
-        (Math.cos(Math.max(offset - lidDelay, 0)) * -0.5 + 0.5) * 2 * Math.PI;
-    }
-    if (leftTabRef.current) {
-      leftTabRef.current.rotation.y =
-        0 -
-        (Math.cos(Math.max(offset - lidDelay, 0)) * -0.5 + 0.5) * 2 * Math.PI;
+  useEffect(
+    () => () =>
+      model.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          const materials = Array.isArray(child.material)
+            ? child.material
+            : [child.material];
+          materials.forEach((material) => material.dispose());
+        }
+      }),
+    [model],
+  );
+
+  const controls = useMemo<BoxControls>(
+    () => ({
+      lid: requiredNode(model, "CTRL_Lid"),
+      tuck: requiredNode(model, "CTRL_TuckFlap"),
+      leftEar: requiredNode(model, "CTRL_TuckEar_L"),
+      rightEar: requiredNode(model, "CTRL_TuckEar_R"),
+      leftWing: requiredNode(model, "CTRL_LidWing_L"),
+      rightWing: requiredNode(model, "CTRL_LidWing_R"),
+    }),
+    [model],
+  );
+
+  // Drive the same exported clip used by the verified model and chat preview.
+  // This keeps flap extraction, ear release and lid/wing timing in one place.
+  const motion = useMemo(() => {
+    const clip = animations.find((animation) => animation.name === "Open_Lid");
+    if (!clip)
+      throw new Error("Cardboard box is missing its opening animation");
+    return {
+      mixer: new THREE.AnimationMixer(model),
+      clip,
+      timeAtScroll: createBoxScrollTimeline(clip),
+    };
+  }, [animations, model]);
+  const actionRef = useRef<THREE.AnimationAction | null>(null);
+  useEffect(() => {
+    const action = motion.mixer.clipAction(motion.clip);
+    action.setLoop(THREE.LoopOnce, 1);
+    action.clampWhenFinished = true;
+    action.play();
+    action.paused = true;
+    actionRef.current = action;
+    return () => {
+      actionRef.current = null;
+      motion.mixer.stopAllAction();
+      motion.mixer.uncacheRoot(model);
+    };
+  }, [motion, model]);
+
+  const displayLidDepth =
+    (Number(controls.lid.userData.depthInches) || 7) * 0.0254 * MODEL_SCALE;
+
+  useEffect(() => {
+    model.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        // The fold strips can move far from their flat-sheet bind bounds.
+        if (child instanceof THREE.SkinnedMesh) child.frustumCulled = false;
+        child.castShadow = true;
+        child.receiveShadow = true;
+
+        const materials = Array.isArray(child.material)
+          ? child.material
+          : [child.material];
+        materials.forEach((material) => {
+          if (material instanceof THREE.MeshStandardMaterial) {
+            material.wireframe = inspection.wireframe;
+            [
+              material.map,
+              material.normalMap,
+              material.roughnessMap,
+              material.aoMap,
+            ].forEach((texture) => {
+              if (texture) {
+                // Preserve fine paper detail when the box is viewed obliquely.
+                texture.anisotropy = Math.max(texture.anisotropy, 8);
+                texture.needsUpdate = true;
+              }
+            });
+          }
+        });
+      }
+    });
+  }, [model, inspection.wireframe]);
+
+  useFrame(() => {
+    // Let the front flap ease out during the approach, as in the original box.
+    // ScrollControls already damps input; keep every hinge on one shared clock.
+    if (inspection.pose === "flat") {
+      model.traverse((node) => {
+        if (Array.isArray(node.userData.flatRotation)) {
+          node.quaternion.fromArray(node.userData.flatRotation);
+        }
+      });
+    } else if (actionRef.current) {
+      actionRef.current.time = motion.timeAtScroll(scroll.offset);
+      motion.mixer.update(0);
     }
   });
 
-  const props = useTexture({
-    map: "Paper004_1K-JPG_Color.jpg",
-    normalMap: "Paper004_1K-JPG_NormalDX.jpg",
-    roughnessMap: "Paper004_1K-JPG_Roughness.jpg",
-  });
-
-  const textureScaleY = 1 / WIDTH;
-  const textureScaleX = 1 / HEIGHT;
-  props.map.wrapS = THREE.RepeatWrapping;
-  props.map.wrapT = THREE.RepeatWrapping;
-  props.map.repeat.set(HEIGHT * textureScaleX, WIDTH * textureScaleY);
-
   return (
-    <group ref={lidRef} position={[0, HEIGHT, -WIDTH / 2 + THICKNESS]}>
-      <Panel
-        pos={new THREE.Vector3(0, 0, WIDTH / 2)}
-        rotation={new THREE.Euler(Math.PI / 2, 0, 0)}
-        width={WIDTH}
-        height={WIDTH + THICKNESS}
-        isLid={true}
-      />
-      <group ref={tabRef} position={[0, 0, WIDTH]}>
-        <Panel
-          pos={new THREE.Vector3(0, -HEIGHT / 2, 0)}
-          rotation={new THREE.Euler(0, 0, 0)}
-          width={WIDTH}
-          height={HEIGHT}
-        />
-        <mesh
-          ref={rightTabRef}
-          {...props}
-          position={[WIDTH / 2, 0, 0]}
-          rotation={new THREE.Euler(Math.PI, 0, Math.PI / 2)}
-        >
-          {/* <circleGeometry args={[HEIGHT, undefined, undefined, Math.PI / 2]} /> */}
-          <cylinderGeometry
-            args={[
-              HEIGHT,
-              HEIGHT,
-              0.05,
-              undefined,
-              undefined,
-              undefined,
-              0,
-              Math.PI / 2,
-            ]}
-          />
-          <meshStandardMaterial
-            map={props.map}
-            color="#ffffff"
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-        <mesh
-          ref={leftTabRef}
-          {...props}
-          position={[-WIDTH / 2, 0, 0]}
-          rotation={new THREE.Euler(Math.PI, 0, Math.PI / 2)}
-        >
-          {/* <circleGeometry args={[HEIGHT, undefined, undefined, Math.PI / 2]} /> */}
-          <cylinderGeometry
-            args={[
-              HEIGHT,
-              HEIGHT,
-              0.05,
-              undefined,
-              undefined,
-              undefined,
-              0,
-              Math.PI / 2,
-            ]}
-          />
-          <meshStandardMaterial
-            map={props.map}
-            color="#ffffff"
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-      </group>
-    </group>
+    <>
+      <primitive object={model} scale={MODEL_SCALE} />
+      {createPortal(
+        <group scale={1 / MODEL_SCALE}>
+          <BoxLabels lidDepth={displayLidDepth} />
+        </group>,
+        controls.lid,
+      )}
+    </>
   );
 };
 
-const BoxBottom = () => {
-  return (
-    <group>
-      {/* Back panel */}
-      <Panel
-        pos={new THREE.Vector3(0, HEIGHT / 2, -WIDTH / 2)}
-        rotation={new THREE.Euler(0, 0, 0)}
-        width={WIDTH - THICKNESS}
-        height={HEIGHT}
-      />
-      {/* Front panel */}
-      <Panel
-        pos={new THREE.Vector3(0, HEIGHT / 2, WIDTH / 2)}
-        rotation={new THREE.Euler(0, 0, 0)}
-        width={WIDTH - THICKNESS}
-        height={HEIGHT}
-      />
-      {/* Left panel */}
-      <Panel
-        pos={new THREE.Vector3(-WIDTH / 2, HEIGHT / 2, 0)}
-        rotation={new THREE.Euler(0, Math.PI / 2, 0)}
-        width={WIDTH + THICKNESS}
-        height={HEIGHT}
-      />
-      {/* Right panel */}
-      <Panel
-        pos={new THREE.Vector3(WIDTH / 2, HEIGHT / 2, 0)}
-        rotation={new THREE.Euler(0, -Math.PI / 2, 0)}
-        width={WIDTH + THICKNESS}
-        height={HEIGHT}
-      />
-      {/* Bottom panel */}
-      <Panel
-        pos={new THREE.Vector3(0, 0, 0)}
-        rotation={new THREE.Euler(Math.PI / 2, 0, 0)}
-        width={WIDTH}
-        height={WIDTH}
-      />
-    </group>
-  );
-};
-
-export const Box = () => {
+export const Box = ({
+  inspection = defaultInspection,
+}: {
+  inspection?: SceneInspection;
+}) => {
   const scroll = useScroll();
   const handleBoxClick = () => {
-    // Scroll to bottom
     if (scroll.el && scroll.offset < 1) {
       scroll.el.scrollTo({
         top: scroll.el.scrollHeight,
@@ -261,7 +187,8 @@ export const Box = () => {
   return (
     <group
       onClick={handleBoxClick}
-      onPointerOver={(e) => {
+      onPointerOver={(event) => {
+        event.stopPropagation();
         if (scroll.offset < 1) {
           document.body.style.cursor = "pointer";
         }
@@ -272,36 +199,22 @@ export const Box = () => {
         }
       }}
     >
-      <BoxLid />
-      <BoxBottom />
+      <RiggedCardboardBox key={inspection.pose} inspection={inspection} />
     </group>
   );
 };
 
-export const Mat = () => {
-  // const matProps = useTexture({
-  //   map: "Carpet006_1K-JPG_Color.jpg",
-  //   displacementMap: "Carpet006_1K-JPG_Displacement.jpg",
-  //   normalMap: "Carpet006_1K-JPG_NormalDX.jpg",
-  //   roughnessMap: "Carpet006_1K-JPG_Roughness.jpg",
-  //   aoMap: "Carpet006_1K-JPG_AmbientOcclusion.jpg",
-  // });
+useLoader.preload(GLTFLoader, MODEL_URL);
 
+export const Mat = () => {
   const floorProps = useTexture({
-    map: "Wood051_1K-JPG_Color.jpg",
-    // displacementMap: "Wood051_1K-JPG_Displacement.jpg",
-    normalMap: "Wood051_1K-JPG_NormalDX.jpg",
-    roughnessMap: "Wood051_1K-JPG_Roughness.jpg",
-    // aoMap: "Wood051_1K-JPG_AmbientOcclusion.jpg",
+    map: sceneAssets.woodColor,
+    normalMap: sceneAssets.woodNormal,
   });
+
   return (
     <group>
-      {/* <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.3, 0]}>
-        <planeGeometry args={[20, 15]} />
-        <meshStandardMaterial {...matProps} />
-      </mesh> */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.6, 0]}>
-        {/* <planeGeometry args={[50, 40]} /> */}
         <boxGeometry args={[50, 40, 1]} />
         <meshToonMaterial {...floorProps} />
       </mesh>

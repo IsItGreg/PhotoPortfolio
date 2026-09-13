@@ -1,60 +1,76 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  PhotoCard,
-  Photo,
-  getCompressedImageSrc,
-  getFullresImageSrc,
-} from "../photos";
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { PhotoCard, Photo } from "../photos";
 import { ScrollNudge } from "../components/ScrollNudge";
 import { FullScreenImage } from "../components/FullScreenImage";
+import { GalleryImage } from "../components/GalleryImage";
 
 const PhotoCardPanel = ({
   photoCard,
+  first,
+  scrollRoot,
   setFullscreen,
 }: {
   photoCard: PhotoCard;
-  setFullscreen: (photo: Photo) => void;
+  first: boolean;
+  scrollRoot: RefObject<HTMLDivElement>;
+  setFullscreen: (photo: Photo, preview: string) => void;
 }) => {
-  const aspectToClass = (aspect?: "horizontal" | "vertical" | "square") => {
-    switch (aspect) {
-      case "horizontal":
-        return "flex-img-hor";
-      case "vertical":
-        return "flex-img-ver";
-      case "square":
-        return "flex-img-sqr";
-      default:
-        return "flex-img-hor";
-    }
-  };
+  const panel = useRef<HTMLElement>(null);
+  const [active, setActive] = useState(first);
+  useEffect(() => {
+    if (active || !panel.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setActive(true);
+          observer.disconnect();
+        }
+      },
+      {
+        root: scrollRoot.current,
+        rootMargin: `${(scrollRoot.current?.clientHeight || 600) * 0.75}px 0px`,
+      },
+    );
+    observer.observe(panel.current);
+    return () => observer.disconnect();
+  }, [active, scrollRoot]);
+
+  const aspectToClass = (aspect?: Photo["aspect"]) =>
+    aspect === "vertical"
+      ? "flex-img-ver"
+      : aspect === "square"
+        ? "flex-img-sqr"
+        : "flex-img-hor";
 
   return (
-    <section className="flex h-full snap-center flex-col items-center justify-center px-5 py-32 sm:px-24">
-      <div className="aspect-17/20 flex h-full max-w-full flex-col content-stretch justify-center gap-3">
-        {photoCard.rows.map((row, index) => {
-          return (
-            <div key={`row-${row.at(0)?.title}-${index}`} className="">
-              <div className="flex flex-row gap-3">
-                {row.map((photo, index) => {
-                  return (
-                    <div
-                      key={`image-${photo.title}-${index}`}
-                      className={aspectToClass(photo.aspect)}
-                    >
-                      <img
-                        loading="lazy"
-                        className="h-full w-full cursor-zoom-in object-cover shadow-lg transition-all ease-in-out hover:scale-[1.02] hover:drop-shadow-lg"
-                        src={getCompressedImageSrc(photo.yearFilename)}
-                        alt={photo.title}
-                        onClick={() => setFullscreen(photo)}
-                      />
-                    </div>
-                  );
-                })}
+    <section
+      ref={panel}
+      className="flex h-full snap-center flex-col items-center justify-center px-5 py-32 sm:px-24"
+    >
+      <div className="flex aspect-17/20 h-full max-w-full flex-col content-stretch justify-center gap-3">
+        {photoCard.rows.map((row, rowIndex) => (
+          <div key={rowIndex} className="flex flex-row gap-3">
+            {row.map((photo, index) => (
+              <div
+                key={`${photo.yearFilename}-${index}`}
+                className={`${aspectToClass(photo.aspect)} min-w-0`}
+              >
+                <GalleryImage
+                  photo={photo}
+                  active={active}
+                  onOpen={(preview) => setFullscreen(photo, preview)}
+                />
               </div>
-            </div>
-          );
-        })}
+            ))}
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -62,121 +78,74 @@ const PhotoCardPanel = ({
 
 export const Images = ({ photoCards }: { photoCards: PhotoCard[] }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [fullscreenedImage, setFullscreenedImage] = useState<Photo | null>(
-    null,
+  const [fullscreen, setFullscreen] = useState<{
+    photo: Photo;
+    preview?: string;
+  } | null>(null);
+  const photoArray = useMemo(
+    () => photoCards.flatMap((card) => card.rows.flat()),
+    [photoCards],
   );
-  const photoArray = photoCards.flatMap((photoCard) => photoCard.rows.flat());
-  const fullscreenImageIndex = photoArray.findIndex(
-    (photo) => photo === fullscreenedImage,
-  );
-  const [showFullscreen, setShowFullscreen] = useState(false);
+  const fullscreenIndex = fullscreen
+    ? photoArray.indexOf(fullscreen.photo)
+    : -1;
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({
-      top: 0,
-      left: 0,
-    });
+    scrollRef.current?.scrollTo({ top: 0, left: 0 });
+    setFullscreen(null);
   }, [photoCards]);
 
   useEffect(() => {
-    if (!fullscreenedImage || !scrollRef.current) return;
-    const scrollCardHeight = scrollRef.current?.clientHeight;
-    const photoPageIndex = photoCards.findIndex((photoCard) =>
-      photoCard.rows.find((row) => row.includes(fullscreenedImage)),
+    if (!fullscreen || !scrollRef.current) return;
+    const pageIndex = photoCards.findIndex((card) =>
+      card.rows.some((row) => row.includes(fullscreen.photo)),
     );
-
-    scrollRef.current?.scrollTo({
-      top: photoPageIndex * scrollCardHeight,
+    scrollRef.current.scrollTo({
+      top: pageIndex * scrollRef.current.clientHeight,
       left: 0,
     });
-  }, [fullscreenedImage, photoCards]);
+  }, [fullscreen, photoCards]);
 
-  const fullscreenPrevious = useCallback(() => {
-    if (fullscreenImageIndex === 0) return;
-    setFullscreenedImage(photoArray[fullscreenImageIndex - 1]);
-  }, [photoArray, fullscreenedImage]);
-
-  const fullscreenNext = useCallback(() => {
-    if (fullscreenImageIndex === photoArray.length - 1) return;
-    setFullscreenedImage(photoArray[fullscreenImageIndex + 1]);
-  }, [photoArray, fullscreenedImage]);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowRight") {
-        fullscreenNext();
-      }
-      if (event.key === "ArrowLeft") {
-        fullscreenPrevious();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [photoArray, fullscreenedImage, fullscreenNext, fullscreenPrevious]);
+  const previous = useCallback(() => {
+    if (fullscreenIndex > 0)
+      setFullscreen({ photo: photoArray[fullscreenIndex - 1] });
+  }, [fullscreenIndex, photoArray]);
+  const next = useCallback(() => {
+    if (fullscreenIndex >= 0 && fullscreenIndex < photoArray.length - 1) {
+      setFullscreen({ photo: photoArray[fullscreenIndex + 1] });
+    }
+  }, [fullscreenIndex, photoArray]);
+  const close = useCallback(() => setFullscreen(null), []);
 
   return (
     <div
       className="h-full snap-y snap-mandatory overflow-y-auto"
       ref={scrollRef}
     >
-      {/* <div
-        className={`absolute left-0 top-0 z-20 flex flex-row h-screen w-screen items-center justify-center ${
-          showFullscreen ? "" : "pointer-events-none"
-        }`}
-      >
-        <div
-          className="h-full w-1/4 cursor-w-resize"
-          onClick={() => fullscreenPrevious()}
-        ></div>
-        <div
-          className="h-full w-1/2 cursor-zoom-out"
-          onClick={() => setShowFullscreen(false)}
-        ></div>
-        <div
-          className="h-full w-1/4 cursor-e-resize"
-          onClick={() => fullscreenNext()}
-        ></div>
-      </div> */}
-      {/* <div
-        className={`pointer-events-none absolute left-0 top-0 z-10 flex h-screen w-screen items-center justify-center bg-black bg-opacity-90 backdrop-blur-sm transition duration-500 ease-in-out ${
-          showFullscreen ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        {fullscreenedImage && (
-          <img
-            loading="lazy"
-            className="max-h-[95%] max-w-[95%] object-cover transition duration-300 ease-in-out md:max-h-[90%] md:max-w-[90%]"
-            alt={fullscreenedImage?.title}
-            src={getFullresImageSrc(fullscreenedImage?.yearFilename)}
-          />
-        )}
-      </div> */}
-      {showFullscreen && fullscreenedImage && (
+      {fullscreen && (
         <FullScreenImage
-          image={fullscreenedImage}
-          onClose={() => setFullscreenedImage(null)}
-          prevImg={fullscreenPrevious}
-          nextImg={fullscreenNext}
-          index={fullscreenImageIndex}
+          key={fullscreen.photo.yearFilename}
+          image={fullscreen.photo}
+          preview={fullscreen.preview}
+          previousPhoto={photoArray[fullscreenIndex - 1]}
+          nextPhoto={photoArray[fullscreenIndex + 1]}
+          onClose={close}
+          prevImg={previous}
+          nextImg={next}
+          index={fullscreenIndex}
           total={photoArray.length}
         />
       )}
       <ScrollNudge scrollRef={scrollRef} />
-      {photoCards.map((photoCard, index) => {
-        return (
-          <PhotoCardPanel
-            key={`card-${index}`}
-            photoCard={photoCard}
-            setFullscreen={(photo: Photo | null) => {
-              setFullscreenedImage(photo);
-              setShowFullscreen(true);
-            }}
-          />
-        );
-      })}
+      {photoCards.map((photoCard, index) => (
+        <PhotoCardPanel
+          key={`${index}-${photoCard.rows[0]?.[0]?.yearFilename}`}
+          photoCard={photoCard}
+          first={index === 0}
+          scrollRoot={scrollRef}
+          setFullscreen={(photo, preview) => setFullscreen({ photo, preview })}
+        />
+      ))}
     </div>
   );
 };

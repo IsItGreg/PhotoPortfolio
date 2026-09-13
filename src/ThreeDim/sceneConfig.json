@@ -1,0 +1,52 @@
+{
+  "displayWidth": 8,
+  "modelWidthInches": 7,
+  "environmentBlur": 0.5,
+  "lightIntensity": 700,
+  "labels": [
+    {
+      "id": "scroll",
+      "text": "scroll\ndown",
+      "fontSize": 4,
+      "lineHeight": 0.76,
+      "scale": 1,
+      "position": [0, 0.055, 0],
+      "rotation": [-1.5707963267948966, 0, 0],
+      "surface": "outside"
+    },
+    {
+      "id": "tap",
+      "text": "tap here",
+      "fontSize": 1,
+      "lineHeight": "normal",
+      "scale": 0.5,
+      "position": [0, -0.2, 0],
+      "rotation": [0, 0, 0.2],
+      "surface": "inside"
+    },
+    {
+      "id": "arrowhead",
+      "text": "^",
+      "fontSize": 1,
+      "lineHeight": "normal",
+      "scale": 1,
+      "position": [1.17, -0.3, 0],
+      "rotation": [0, 0, 2.356194490192345],
+      "surface": "inside"
+    },
+    {
+      "id": "arrowcurve",
+      "text": "C",
+      "fontSize": 1,
+      "lineHeight": "normal",
+      "scale": 0.9,
+      "position": [0.9, -0.16, 0],
+      "rotation": [0, 0, 3.59],
+      "surface": "inside"
+    }
+  ],
+  "insideLabelGroup": {
+    "position": [2.3, -0.075, 0.75],
+    "rotation": [1.5707963267948966, 0, 0]
+  }
+}

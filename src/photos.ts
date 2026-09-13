@@ -7,11 +7,17 @@ export type Photo = {
 };
 
 export const getCompressedImageSrc = (yearFilename: string) => {
-  return `${process.env.PUBLIC_URL}/images/twodim/${yearFilename}_small.webp`;
+  return `${process.env.PUBLIC_URL}/images/twodim/${yearFilename
+    .split("/")
+    .map(encodeURIComponent)
+    .join("/")}_small.webp`;
 };
 
 export const getFullresImageSrc = (yearFilename: string) => {
-  return `${process.env.PUBLIC_URL}/images/twodim/${yearFilename}_full.webp`;
+  return `${process.env.PUBLIC_URL}/images/twodim/${yearFilename
+    .split("/")
+    .map(encodeURIComponent)
+    .join("/")}_full.webp`;
 };
 
 type PhotoRow = Photo[];

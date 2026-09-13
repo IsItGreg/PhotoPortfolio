@@ -1,0 +1,47 @@
+{
+  "labels": [
+    {
+      "center": [
+        0.0,
+        0.224609375
+      ],
+      "height": 5.93359375,
+      "id": "scroll",
+      "url": "/textures/box-label-scroll.webp?v=6440bd805a3dac0e",
+      "width": 8.0078125
+    },
+    {
+      "center": [
+        0.0,
+        0.068359375
+      ],
+      "height": 0.76171875,
+      "id": "tap",
+      "url": "/textures/box-label-tap.webp?v=56d9a662575ce8ba",
+      "width": 2.4375
+    },
+    {
+      "center": [
+        0.0,
+        0.052734375
+      ],
+      "height": 0.72265625,
+      "id": "arrowhead",
+      "url": "/textures/box-label-arrowhead.webp?v=993e3776b267c0db",
+      "width": 0.3515625
+    },
+    {
+      "center": [
+        0.0,
+        0.052734375
+      ],
+      "height": 0.73046875,
+      "id": "arrowcurve",
+      "url": "/textures/box-label-arrowcurve.webp?v=dea18d3fd6c200ca",
+      "width": 0.3828125
+    }
+  ],
+  "model": "/models/cardboard-mailer.glb?v=42c89795c081ca81",
+  "woodColor": "/textures/wood-color-q90.webp?v=9d99dc833264c0a6",
+  "woodNormal": "/textures/wood-normaldx-q90.webp?v=110e5920c0dcf534"
+}

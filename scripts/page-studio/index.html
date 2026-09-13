@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Page Studio · PhotoPortfolio</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/studio.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">▥</span>
+        <div>
+          <h1>Page Studio</h1>
+          <p id="status" role="status">Loading your pages…</p>
+        </div>
+      </div>
+      <div class="view-switch" role="group" aria-label="Workspace view">
+        <button id="organize-view" aria-pressed="true" disabled>
+          Organize
+        </button>
+        <button id="edit-view" aria-pressed="false" disabled>Edit page</button>
+        <button id="box-view" aria-pressed="false" disabled>Photo box</button>
+      </div>
+      <div class="top-actions">
+        <button
+          id="show-pages"
+          class="show-pages"
+          aria-haspopup="dialog"
+          aria-controls="pages-dialog"
+          disabled
+        >
+          Pages
+        </button>
+        <button
+          id="show-library"
+          class="show-library"
+          aria-haspopup="dialog"
+          aria-controls="library-dialog"
+          disabled
+        >
+          Photos
+        </button>
+        <button id="undo" title="Undo (⌘Z)" disabled>Undo</button
+        ><button id="redo" title="Redo (⌘⇧Z)" disabled>Redo</button
+        ><button id="export">Export draft</button>
+        <a
+          id="local-preview"
+          class="preview-link"
+          href="/preview"
+          target="_blank"
+          rel="noopener"
+          >Open local preview ↗</a
+        >
+        <button id="save" class="primary" disabled>Save changes</button>
+      </div>
+    </header>
+    <div id="message" class="message" role="alert" hidden></div>
+    <div id="recovery" class="recovery" hidden>
+      <span>A draft from your last session is available.</span
+      ><button id="restore">Restore draft</button
+      ><button id="discard">Dismiss</button>
+    </div>
+    <main class="workspace" id="workspace" aria-busy="true" inert>
+      <aside class="pages-panel">
+        <div class="panel-heading">
+          <h2>Galleries</h2>
+          <button id="close-pages" class="close-pages" aria-label="Close pages">
+            Close
+          </button>
+          <button
+            id="new-gallery"
+            class="icon"
+            title="New gallery"
+            aria-label="New gallery"
+          >
+            +
+          </button>
+        </div>
+        <nav id="gallery-nav" aria-label="Page library and galleries"></nav>
+        <button id="edit-gallery" class="text-button">Gallery settings</button>
+        <div id="gallery-tools" class="gallery-tools" hidden>
+          <div class="gallery-order">
+            <span>Menu order</span
+            ><button id="gallery-up" aria-label="Move gallery earlier">↑</button
+            ><button id="gallery-down" aria-label="Move gallery later">
+              ↓
+            </button>
+          </div>
+        </div>
+        <p id="gallery-note" class="gallery-note"></p>
+        <div id="editor-pages">
+          <div class="section-label">
+            <h2>
+              <span id="section-name">Page library</span>
+              <span id="page-count"></span>
+            </h2>
+            <button
+              id="add-page"
+              class="icon"
+              title="Add a blank page"
+              aria-label="Add a blank page"
+            >
+              +
+            </button>
+          </div>
+          <button id="add-existing" class="add-existing" hidden>
+            + Add existing pages
+          </button>
+          <div id="pages" class="page-list"></div>
+          <p class="panel-note">
+            Each page is one scrolling panel on your site. Drag photos into a
+            row to arrange it.
+          </p>
+        </div>
+      </aside>
+      <section
+        id="organizer"
+        class="organizer"
+        aria-label="Organize galleries and pages"
+      ></section>
+      <section
+        id="box-studio"
+        class="box-studio"
+        aria-label="Photo box editor"
+        hidden
+      ></section>
+      <section class="canvas-panel">
+        <div class="canvas-toolbar">
+          <div>
+            <h2 id="page-title">Your pages</h2>
+            <p id="page-description"></p>
+          </div>
+          <div class="toolbar-actions">
+            <button id="duplicate-page">Duplicate</button
+            ><button id="delete-page" class="quiet-danger">Remove page</button
+            ><select id="zoom" aria-label="Preview zoom">
+              <option value="fit">Fit page</option>
+              <option value="large">Large</option>
+            </select>
+            <button id="preview">Preview</button>
+          </div>
+        </div>
+        <div id="page-settings" class="page-settings" hidden>
+          <label class="page-title-field"
+            >Page name<input id="page-name" maxlength="120"
+          /></label>
+          <div id="page-visibility"></div>
+          <p id="page-site-status" class="page-membership"></p>
+          <p id="page-membership" class="page-membership"></p>
+          <button id="page-galleries" class="text-button">
+            Manage gallery membership
+          </button>
+        </div>
+        <div class="canvas-scroll">
+          <div id="canvas" class="page-canvas"></div>
+          <button id="add-row" class="add-row">+ Add a row</button>
+          <div id="empty-page" class="empty" hidden>
+            <h3>Build your page collection</h3>
+            <p>
+              Create a new page, or add existing pages from the library to a
+              gallery.
+            </p>
+            <button id="empty-add-page" class="primary">Add a page</button>
+          </div>
+        </div>
+        <div id="inspector" class="inspector">
+          <p>Select a photo on the page to edit its details or move it.</p>
+        </div>
+        <footer class="canvas-footer">
+          <span id="counts"></span
+          ><a
+            id="saved-preview"
+            href="/preview#/nyc"
+            target="_blank"
+            rel="noopener"
+            >Open local preview ↗</a
+          >
+        </footer>
+      </section>
+      <aside class="library-panel">
+        <div class="panel-heading">
+          <h2>Photo library</h2>
+          <button
+            id="close-library"
+            class="close-library"
+            aria-label="Close photo library"
+          >
+            Close
+          </button>
+          <span id="library-count" class="badge"></span>
+        </div>
+        <label class="sr-only" for="search">Search photos</label
+        ><input
+          id="search"
+          type="search"
+          placeholder="Search filename or title…"
+        />
+        <div class="library-filters">
+          <label class="sr-only" for="year">Filter by year</label
+          ><select id="year">
+            <option value="">All years</option></select
+          ><label
+            ><input id="unused" type="checkbox" />
+            <span id="unused-label">Unused here</span></label
+          >
+        </div>
+        <label class="sr-only" for="folder">Filter by folder</label>
+        <select id="folder" class="library-folder">
+          <option value="">All folders</option>
+        </select>
+        <p class="library-hint" id="library-hint">
+          Select a row, then click + on a photo. Or drag it onto the page.
+        </p>
+        <div id="library" class="library-grid"></div>
+      </aside>
+    </main>
+    <dialog id="gallery-dialog">
+      <form id="gallery-form">
+        <h2 id="dialog-title">New gallery</h2>
+        <label
+          >Gallery name<input
+            id="gallery-name"
+            required
+            maxlength="80"
+            placeholder="e.g. Infrared" /></label
+        ><label
+          >Page address
+          <div class="address">
+            <span>#/</span
+            ><input
+              id="gallery-slug"
+              required
+              maxlength="80"
+              pattern="[a-z0-9]+(-[a-z0-9]+)*"
+              placeholder="infrared"
+            /></div
+        ></label>
+        <label
+          >Gallery visibility<select id="dialog-gallery-visible">
+            <option value="false">Hidden</option>
+            <option value="true">Visible</option>
+          </select></label
+        >
+        <p id="dialog-error" class="error-text"></p>
+        <div class="dialog-actions">
+          <button type="button" id="cancel-gallery">Cancel</button
+          ><button type="submit" class="primary">Apply to draft</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog
+      id="membership-dialog"
+      class="attach-dialog"
+      aria-labelledby="membership-heading"
+    >
+      <form id="membership-form">
+        <h2 id="membership-heading">Included in galleries</h2>
+        <p id="membership-help" class="attach-help"></p>
+        <div id="membership-list" class="attach-list"></div>
+        <p id="membership-error" class="error-text" role="alert"></p>
+        <div class="dialog-actions">
+          <button id="membership-cancel" type="button">Cancel</button
+          ><button id="membership-submit" class="primary" type="submit">
+            Apply membership
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="attach-dialog" class="attach-dialog">
+      <form id="attach-form">
+        <h2 id="attach-heading">Add existing pages</h2>
+        <p class="attach-help">
+          These are shared pages. Editing one updates it in every gallery that
+          uses it.
+        </p>
+        <div id="attach-list" class="attach-list"></div>
+        <p id="attach-error" class="error-text" role="alert"></p>
+        <div class="dialog-actions">
+          <button id="attach-cancel" type="button">Cancel</button
+          ><button id="attach-submit" type="submit" class="primary">
+            Add selected pages
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <dialog
+      id="pages-dialog"
+      class="sidebar-dialog"
+      aria-label="Galleries and pages"
+    ></dialog>
+    <dialog
+      id="library-dialog"
+      class="sidebar-dialog"
+      aria-label="Photo library"
+    ></dialog>
+    <dialog id="move-photo-dialog" aria-labelledby="move-photo-heading">
+      <form id="move-photo-form">
+        <h2 id="move-photo-heading">Move photo</h2>
+        <p id="move-photo-description" class="attach-help"></p>
+        <label
+          >Destination page<select
+            id="move-photo-page"
+            aria-label="Destination page"
+          ></select
+        ></label>
+        <label
+          >Destination row<select
+            id="move-photo-row"
+            aria-label="Destination row"
+          ></select
+        ></label>
+        <label
+          >Position<select
+            id="move-photo-position"
+            aria-label="Position"
+          ></select
+        ></label>
+        <p id="move-photo-note" class="attach-help"></p>
+        <p id="move-photo-error" class="error-text" role="alert"></p>
+        <div class="dialog-actions">
+          <button id="move-photo-cancel" type="button">Cancel</button
+          ><button id="move-photo-submit" class="primary" type="submit">
+            Move photo
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <div
+      id="photo-move-status"
+      class="sr-only"
+      role="status"
+      aria-live="polite"
+    ></div>
+    <dialog id="photo-dialog">
+      <button
+        id="close-photo"
+        class="close-dialog"
+        aria-label="Close photo preview"
+      >
+        ×</button
+      ><img id="large-photo" alt="" />
+      <p id="large-photo-title"></p>
+    </dialog>
+  </body>
+</html>
