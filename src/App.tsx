@@ -1,5 +1,5 @@
-import { lazy, Suspense } from "react";
 import { HashRouter, Link, Route, Routes } from "react-router-dom";
+import { ThreeDimPage } from "./ThreeDim/ThreeDimPage";
 import { TwoDimPage } from "./TwoDim/TwoDimPage";
 import { Navbar } from "./components/Navbar";
 import { Images } from "./TwoDim/Images";
@@ -11,35 +11,13 @@ import {
   useGalleryStatus,
 } from "./pageGalleries";
 
-const ThreeDimPage = lazy(() =>
-  import("./ThreeDim/ThreeDimPage").then((module) => ({
-    default: module.ThreeDimPage,
-  })),
-);
-
 const GalleryRoutes = () => {
   const galleries = usePageGalleries();
   const status = useGalleryStatus();
   return (
     <HashRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Suspense
-              fallback={
-                <main
-                  className="flex h-screen items-center justify-center bg-stone-900 text-white"
-                  role="status"
-                >
-                  Loading the box of photos…
-                </main>
-              }
-            >
-              <ThreeDimPage />
-            </Suspense>
-          }
-        />
+        <Route path="/" element={<ThreeDimPage />} />
         {galleries.map((gallery) => (
           <Route
             key={gallery.id}
