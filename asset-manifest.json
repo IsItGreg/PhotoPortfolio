@@ -1,16 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.b79f5580.css",
-    "main.js": "/static/js/main.6092e28c.js",
+    "main.css": "/static/css/main.698e9d40.css",
+    "main.js": "/static/js/main.e7211551.js",
     "static/js/717.ea2ccc23.chunk.js": "/static/js/717.ea2ccc23.chunk.js",
     "static/js/27.7267a836.chunk.js": "/static/js/27.7267a836.chunk.js",
     "static/js/890.2ec6e725.chunk.js": "/static/js/890.2ec6e725.chunk.js",
     "static/media/handwriting.ttf": "/static/media/handwriting.e33413087b6bd766f12f.ttf",
-    "static/media/LOSTLATE.ttf": "/static/media/LOSTLATE.9f67e60d7ba5f8551f0c.ttf",
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.b79f5580.css",
-    "static/js/main.6092e28c.js"
+    "static/css/main.698e9d40.css",
+    "static/js/main.e7211551.js"
   ]
 }
