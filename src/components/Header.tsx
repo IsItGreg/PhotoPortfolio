@@ -3,7 +3,7 @@ import Modal from "./Modal";
 import { useState } from "react";
 import About from "./About";
 import { usePageGalleries } from "../pageGalleries";
-export const Header = ({ isTwoDim = false }: { isTwoDim?: boolean }) => {
+export const Header = () => {
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
   const galleries = usePageGalleries();
   return (

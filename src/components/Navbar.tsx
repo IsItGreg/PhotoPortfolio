@@ -2,10 +2,10 @@ import { NavLink } from "react-router-dom";
 
 export const Navbar = () => {
   return (
-    <div className="bg-orange-950 font-bold font-sans flex h-14 flex-row items-center justify-evenly sm:gap-5 text-lg text-stone-400 md:h-full md:flex-col md:justify-center shadow">
+    <div className="flex h-14 flex-row items-center justify-evenly bg-orange-950 font-sans text-lg font-bold text-stone-400 shadow sm:gap-5 md:h-full md:flex-col md:justify-center">
       <NavLink
         className={({ isActive }) =>
-          `text-center font-name text-3xl font-bold md:text-5xl p-2 mt-1 hover:text-stone-100 ${
+          `mt-1 p-2 text-center font-lost text-3xl font-bold hover:text-stone-100 md:text-5xl ${
             isActive ? "text-stone-100" : ""
           }`
         }
@@ -16,7 +16,7 @@ export const Navbar = () => {
       <div className="grow sm:grow-0" />
       <NavLink
         className={({ isActive }) =>
-          `hover:text-stone-100 md:text-xl p-2 ${
+          `p-2 hover:text-stone-100 md:text-xl ${
             isActive ? "text-stone-100" : ""
           }`
         }
@@ -26,7 +26,7 @@ export const Navbar = () => {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          `hover:text-stone-100 md:text-xl p-2 ${
+          `p-2 hover:text-stone-100 md:text-xl ${
             isActive ? "text-stone-100" : ""
           }`
         }
@@ -36,7 +36,7 @@ export const Navbar = () => {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          `hover:text-stone-100 md:text-xl p-2 ${
+          `p-2 hover:text-stone-100 md:text-xl ${
             isActive ? "text-stone-100" : ""
           }`
         }
@@ -46,7 +46,7 @@ export const Navbar = () => {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          `hover:text-stone-100 md:text-xl p-2 ${
+          `p-2 hover:text-stone-100 md:text-xl ${
             isActive ? "text-stone-100" : ""
           }`
         }

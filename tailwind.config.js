@@ -4,7 +4,6 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        name: ["Just Another Hand", "sans-serif"],
         lost: ["Lost Late", "sans-serif"],
         handwriting: ["Handwriting", "sans-serif"],
       },

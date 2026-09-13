@@ -21,7 +21,7 @@ export const PageGalleryProvider = ({
   useEffect(() => {
     const controller = new AbortController();
     fetch(`${process.env.PUBLIC_URL}/photo-pages.json`, {
-      cache: "no-store",
+      cache: "no-cache",
       signal: controller.signal,
     })
       .then((response) => {

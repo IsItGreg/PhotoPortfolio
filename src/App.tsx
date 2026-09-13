@@ -2,6 +2,8 @@ import { HashRouter, Link, Route, Routes } from "react-router-dom";
 import { ThreeDimPage } from "./ThreeDim/ThreeDimPage";
 import { TwoDimPage } from "./TwoDim/TwoDimPage";
 import { Navbar } from "./components/Navbar";
+import { Header } from "./components/Header";
+import { Copyright } from "./components/Copyright";
 import { Images } from "./TwoDim/Images";
 import { photoCards2023 } from "./photos";
 import { PhotoAssetProvider } from "./photoAssets";
@@ -16,6 +18,7 @@ const GalleryRoutes = () => {
   const status = useGalleryStatus();
   return (
     <HashRouter>
+      <Header />
       <Routes>
         <Route path="/" element={<ThreeDimPage />} />
         {galleries.map((gallery) => (
@@ -41,21 +44,30 @@ const GalleryRoutes = () => {
         <Route
           path="*"
           element={
-            <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-amber-50 p-8 text-stone-800">
-              <p role="status">
+            <main
+              className="flex h-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-stone-200 to-stone-400 px-8 pb-16 pt-40 text-stone-800"
+              aria-busy={status === "loading"}
+            >
+              <p
+                role="status"
+                className={status === "loading" ? "sr-only" : undefined}
+              >
                 {status === "loading"
                   ? "Loading galleries…"
                   : status === "error"
                     ? "Galleries could not be loaded. Please try refreshing."
                     : "This gallery is unavailable."}
               </p>
-              <Link className="underline underline-offset-4" to="/">
-                Back to the box of photos
-              </Link>
+              {status !== "loading" && (
+                <Link className="underline underline-offset-4" to="/">
+                  Back to the box of photos
+                </Link>
+              )}
             </main>
           }
         />
       </Routes>
+      <Copyright />
     </HashRouter>
   );
 };

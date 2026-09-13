@@ -8,15 +8,31 @@
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Photography portfolio made using React" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Knewave&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="%PUBLIC_URL%/fonts/lost-late.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <style>
+      @font-face {
+        font-family: "Lost Late";
+        src: url("%PUBLIC_URL%/fonts/lost-late.ttf") format("truetype");
+        font-display: block;
+      }
+    </style>
+    <link
+      rel="preload"
+      href="%PUBLIC_URL%/photo-pages.json"
+      as="fetch"
+      crossorigin
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Just+Another+Hand&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="%PUBLIC_URL%/photo-assets.json"
+      as="fetch"
+      crossorigin
     />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Gregory Smelkov Photography</title>
